@@ -1,0 +1,10 @@
+.element__like {
+    max-width: 22px;
+    padding-top: 30px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+}
+
+.element__like:active {
+    color: black;
+}
