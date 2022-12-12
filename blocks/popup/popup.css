@@ -1,5 +1,7 @@
 .popup {
     display: none;
+    position: absolute;
+    top: 123px;
     background: #000000;
     opacity: 0.5;
 }
