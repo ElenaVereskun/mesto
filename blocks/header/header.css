@@ -1,5 +1,11 @@
 .header {
     display: flex;
     justify-content: flex-start;
-    max-width: 84px;
+    max-height: 84px;
+}
+
+@media screen and (min-width: 1280px) {
+    .header {
+        max-height: 119px;
+    }
 }

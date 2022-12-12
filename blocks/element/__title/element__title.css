@@ -7,4 +7,7 @@
     padding-top: 25px;
     padding-bottom: 30px;
     padding-left: 21px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }

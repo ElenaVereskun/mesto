@@ -4,3 +4,11 @@
     align-items: center;
     padding-top: 38.25px;
 }
+
+@media screen and (min-width: 1280px) {
+    .profile {
+        padding-top: 36.25px;
+        flex-direction: row;
+        padding-left: 200px;
+    }
+}
