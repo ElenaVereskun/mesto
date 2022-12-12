@@ -1,0 +1,5 @@
+.profile__info {
+    display: flex;
+    padding-top: 22.25px;
+    column-gap: 20px;
+}
