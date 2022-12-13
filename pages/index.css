@@ -18,6 +18,7 @@
 @import url(../blocks/popup/__name/popup__name.css);
 @import url(../blocks/popup/__about/popup__about.css);
 @import url(../blocks/popup/__save-button/popup__save-button.css);
+@import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__like/element__like.css);
