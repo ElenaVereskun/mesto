@@ -8,6 +8,7 @@
 
 @media screen and (min-width: 1280px) {
     .profile__name {
-        /* padding-left: 3.75px; */
+        font-size: 42px;
+        line-height: 48px;
     }
 }

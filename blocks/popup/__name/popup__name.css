@@ -1,4 +1,7 @@
 .popup__name {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
     margin: 0;
     padding-right: 22px;
     padding-left: 22px;
