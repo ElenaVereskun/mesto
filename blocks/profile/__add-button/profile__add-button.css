@@ -5,7 +5,7 @@
     border: none;
     background-color: transparent;
     cursor: pointer;
-    background-size: cover;
+    background-size: auto;
     border: 2px solid #FFFFFF;
     border-radius: 2px;
 }

@@ -12,5 +12,8 @@
     .profile__about {
         font-size: 18px;
         line-height: 22px;
+        /* padding: 14px 0px 76px 0px; */
+        padding-left: 0px;
+        padding-top: 14px;
     }
 }
