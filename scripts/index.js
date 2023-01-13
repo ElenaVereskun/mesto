@@ -9,30 +9,33 @@ editButton.addEventListener('click', (event) => {
     popup.classList.add('popup_opened');
 });
 
-closeButton.addEventListener('click', () => {
+closeButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    console.log(event);
     popup.classList.remove('popup_opened');
 });
 
-let formElement = document.querySelector('form');
-let popupName = formElement.querySelector('.popup__name');
-let popupAbout = formElement.querySelector('.popup__about');
+let popupForm = document.querySelector('.popup__form');
+let popupName = document.querySelector('.popup__name');
+let popupAbout = document.querySelector('.popup__about');
 
-function handleFormSubmit (evt) {
+function handleFormSubmit(evt) {
     evt.preventDefault();
 
-    let popupName = formElement.querySelector('input');
-    popupName.getAttribute('value');
+    console.log(popupName.value);
+    console.log(popupAbout.value);
 
-    let profileInfo = document.querySelector('.profile__info');
-    let profileName = profileInfo.querySelector('.profile__name');
+    let profileName = document.querySelector('.profile__name');
+    let profileAbout = document.querySelector('.profile__about');
 
-    profileName.textContent = ('.popupName');
-
-    
-
+    console.log(profileName.textContent);
+    console.log(profileAbout.textContent);
 }
+popupForm.addEventListener('submit', handleFormSubmit);
 
-formElement.addEventListener('submit', handleFormSubmit); 
+
+
+
 
 /* // Находим форму в DOM
 let formElement = // Воспользуйтесь методом querySelector()
