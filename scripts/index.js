@@ -31,10 +31,12 @@ function handleFormSubmit(evt) {
     console.log(profileName.textContent);
     console.log(profileAbout.textContent);
 
-    profileName.textContent = 'popupName.value';
-    profileAbout.textContent = 'popupAbout.value';
+    profileName.textContent = popupName.value;
+    profileAbout.textContent = popupAbout.value;
 }
 popupForm.addEventListener('submit', handleFormSubmit);
 
-
+saveButton.addEventListener('click', () => {
+    popup.classList.remove('popup_opened');
+});
 
