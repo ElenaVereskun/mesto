@@ -1,8 +1,6 @@
 .element__like {
     max-width: 22px;
-    position: absolute;
-    bottom: 30px;
-    right: 20px;
+    padding-right: 20px;
 }
 
 .element__like:hover {
