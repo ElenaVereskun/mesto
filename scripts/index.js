@@ -1,42 +1,39 @@
-const editButton = document.querySelector('.profile__edit-button');
 const popup = document.querySelector('.popup');
-const closeButton = popup.querySelector('.popup__close-button');
-const saveButton = popup.querySelector('.popup__save-button');
-
-editButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    console.log(event);
-    popup.classList.add('popup_opened');
-});
-
-closeButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    console.log(event);
-    popup.classList.remove('popup_opened');
-});
-
+const buttonEdit = popup.querySelector('.profile__edit-button');
+const buttonClose = popup.querySelector('.popup__close-button');
 let popupForm = document.querySelector('.popup__form');
-let popupName = popupForm.querySelector('.popup__name');
-let popupAbout = popupForm.querySelector('.popup__about');
+let popupName = popupForm.querySelector('popup_user-info_name');
+let popupJob = popupForm.querySelector('popup_user-info_job');
+let profile = document.querySelector('.profile');
+let profileName = profile.querySelector('.profile__name');
+let profileJob = profile.querySelector('.profile__job');
+
+function hendler() {
+    profileName.textContent;
+    profileJob.textContent;
+
+    profileName.textContent = popupName.value;
+    profileJob.textContent = popupJob.value;
+}
 
 function handleFormSubmit(evt) {
     evt.preventDefault();
 
-    console.log(popupName.value);
-    console.log(popupAbout.value);
+    popupName.value;
+    popupJob.value;
 
-    let profileName = document.querySelector('.profile__name');
-    let profileAbout = document.querySelector('.profile__about');
-
-    console.log(profileName.textContent);
-    console.log(profileAbout.textContent);
+    profileName.textContent;
+    profileJob.textContent;
 
     profileName.textContent = popupName.value;
-    profileAbout.textContent = popupAbout.value;
+    profileJob.textContent = popupJob.value;
 }
 popupForm.addEventListener('submit', handleFormSubmit);
 
-saveButton.addEventListener('click', () => {
-    popup.classList.remove('popup_opened');
+buttonEdit.addEventListener('click', hendler => {
+    popup.classList.add('popup_opened');
 });
 
+buttonClose.addEventListener('click', hendler => {
+    popup.classList.remove('popup_opened');
+});
