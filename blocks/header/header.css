@@ -1,11 +1,8 @@
 .header {
     display: flex;
     justify-content: flex-start;
-    max-height: 84px;
-}
-
-@media screen and (min-width: 1280px) {
-    .header {
-        max-height: 119px;
-    }
+    opacity: 0.7;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #545454;
 }

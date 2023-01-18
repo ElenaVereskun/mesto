@@ -1,6 +1,7 @@
 .profile__add-button-centre {
     height: 16px;
     width: 16px;
+    background-image: url(../../../images/add-button.svg);
 }
 
 @media screen and (min-width: 1280px) {
