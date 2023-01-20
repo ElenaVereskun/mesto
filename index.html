@@ -8,23 +8,24 @@
     <title>Место</title>
 </head>
 
-<main class="page">
+<body class="page">
     <header class="header">
         <img class="header__logo" src="images/logo.svg" alt="логотип">
     </header>
-    <section class="content">
+    <main class="content">
         <section class="profile">
             <div class="profile__info">
                 <img src="images/avatar.jpg" class="profile__photo" alt="аватар">
                 <div class="profile__user-name">
-                    <h1 class="profile__name">Жак-Ив Кусто
+                    <div class="profile__user-edit">
+                        <h1 class="profile__name">Жак-Ив Кусто</h1>
                         <button class="profile__edit-button" type="button" aria-label="Изменить"></button>
-                    </h1>
+                    </div>
                     <p class="profile__job">Исследователь океана</p>
                 </div>
             </div>
             <button class="profile__add-button" type="button" aria-label="Добавить">
-                <div class="profile__add-button-centre"></div>
+                <img class="profile__add-button-centre">
             </button>
         </section>
         <section>
@@ -73,7 +74,7 @@
                 </li>
             </ul>
         </section>
-    </section>
+    </main>
     <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
@@ -91,6 +92,6 @@
         </div>
     </div>
     <script src="scripts/index.js"></script>
-</main>
+</body>
 
 </html>

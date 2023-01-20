@@ -2,6 +2,8 @@
     height: 16px;
     width: 16px;
     background-image: url(../../../images/add-button.svg);
+    background-position: center;
+    border: none;
 }
 
 @media screen and (min-width: 1280px) {
