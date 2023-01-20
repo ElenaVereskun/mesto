@@ -8,7 +8,7 @@ let profile = document.querySelector('.profile');
 let profileName = profile.querySelector('.profile__name');
 let profileJob = profile.querySelector('.profile__job');
 
-function handleFormSubmit(evt) {
+function handleFormSubmit(evt) {      //функция заполнения формы
     evt.preventDefault();
 
     popupName.value;
@@ -20,16 +20,19 @@ function handleFormSubmit(evt) {
     profileName.textContent = popupName.value;
     profileJob.textContent = popupJob.value;
 
-    /* buttonClose.addEventListener('click', handleFormSubmit); */
-    //значения из профайла появляются в импутах
+    function fnClose() {
+        popup.classList.remove('popup_opened');
+    }
+    fnClose()      //ф-ция закрытия попапа
 }
 popupForm.addEventListener('submit', handleFormSubmit);
 
-buttonEdit.addEventListener('click', () => {
+buttonEdit.addEventListener('click', () => {      //слушатель события //Добавить информацию
     popup.classList.add('popup_opened');
-    handleFormSubmit();
+    popupName.value = profileName.textContent;
+    popupJob.value = profileJob.textContent;
 });
 
-buttonClose.addEventListener('click', () => {
+buttonClose.addEventListener('click', () => {      //слушатель события закрыть попап    
     popup.classList.remove('popup_opened');
 });
