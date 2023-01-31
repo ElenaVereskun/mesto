@@ -32,7 +32,7 @@
             <ul class="elements">
                 <li class="element">
                     <div class="element__image">
-                      <button class="element__trash" type="button" aria-label="удаление"></button>
+                      <button class="element__delete" type="button" aria-label="удаление"></button>
                       <img src="images/karachaevsk.jpg" class="element__photo" alt="Карачаевск">
                     </div>
                     <div class="element__caption">
@@ -42,7 +42,7 @@
                 </li>
                 <li class="element">
                     <div class="element__image">
-                      <button class="element__trash" type="button" aria-label="удаление"></button>
+                      <button class="element__delete" type="button" aria-label="удаление"></button>
                       <img src="images/elbrus.jpg" class="element__photo" alt="Эльбрус">
                     </div>  
                     <div class="element__caption">
@@ -52,7 +52,7 @@
                 </li>
                 <li class="element">
                     <div class="element__image">
-                        <button class="element__trash" type="button" aria-label="удаление"></button>
+                        <button class="element__delete" type="button" aria-label="удаление"></button>
                         <img src="images/dombay.jpg" class="element__photo" alt="Домбай">
                     </div>
                     <div class="element__caption">
@@ -62,7 +62,7 @@
                 </li>
                 <li class="element">
                     <div class="element__image">
-                        <button class="element__trash" type="button" aria-label="удаление"></button>
+                        <button class="element__delete" type="button" aria-label="удаление"></button>
                         <img src="images/elbrus.jpg" class="element__photo" alt="Эльбрус">
                     </div>
                     <div class="element__caption">
@@ -72,7 +72,7 @@
                 </li>
                 <li class="element">
                     <div class="element__image">
-                        <button class="element__trash" type="button" aria-label="удаление"></button>
+                        <button class="element__delete" type="button" aria-label="удаление"></button>
                         <img src="images/dombay.jpg" class="element__photo" alt="Домбай">
                     </div>
                     <div class="element__caption">
@@ -82,7 +82,7 @@
                 </li>
                 <li class="element">
                     <div class="element__image">
-                        <button class="element__trash" type="button" aria-label="удаление"></button>
+                        <button class="element__delete" type="button" aria-label="удаление"></button>
                         <img src="images/karachaevsk.jpg" class="element__photo" alt="Карачаевск">
                     </div>
                     <div class="element__caption">
@@ -109,18 +109,21 @@
             </form>
         </div>
     </div>
-    <div class="popup-photo">
-        <div class="popup-photo__container">
-            <h2 class="popup-photo__title">Новое место</h2>
-            <form class="popup-photo__form" name="поп-ап">
-                <input class="popup-photo__place" type="text" name="place" placeholder=" " value=" "
+    <div class="popup-add">
+        <div class="popup-add__container">
+            <h2 class="popup-add__title">Новое место</h2>
+            <form class="popup-add__form" name="поп-ап">
+                <input class="popup-add__place" type="text" name="place" placeholder=" " value="Название"
                     required>
-                <input class="popup-photo__url" type=" " name="url" placeholder=" " value=" "
+                <input class="popup-add__url" type=" " name="url" placeholder=" " value="Ссылка на картинку"
                     required>
-                <button class="popup-photo__save-button" type="submit" aria-label="Создать">Создать</button>
-                <button class="popup-photo__close-button" type="button" aria-label="Закрыть"></button>
+                <button class="popup-add__save-button" type="submit" aria-label="Создать">Создать</button>
+                <button class="popup-add__close-button" type="button" aria-label="Закрыть"></button>
             </form>
         </div>
+    </div>
+    <div class="popup-photo">
+
     </div>
     <script src="scripts/index.js"></script>
 </body>

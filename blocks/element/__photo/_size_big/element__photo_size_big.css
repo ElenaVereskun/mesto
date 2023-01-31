@@ -1,0 +1,5 @@
+.element__photo_size_big {
+    max-width: 75vw;
+    max-height: 75vh;
+    border-radius: 0;
+}

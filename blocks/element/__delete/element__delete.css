@@ -1,4 +1,4 @@
-    .element__trash {
+    .element__delete {
         width: 18px;
         height: 19px;
         background-image: url(../../../images/trash.svg);
@@ -10,11 +10,11 @@
         top: 0px;
     }
     
-    .element__trash:hover {
+    .element__delete:hover {
         cursor: pointer;
         opacity: 0.5;
     }
     
-    .element__trash:active {
+    .element__delete:active {
         color: black;
     }
