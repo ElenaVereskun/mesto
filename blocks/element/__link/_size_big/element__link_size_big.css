@@ -1,5 +1,7 @@
-.element__photo_size_big {
+.element__link_size_big {
+    display: flex;
     max-width: 75vw;
     max-height: 75vh;
     border-radius: 0;
+    
 }

@@ -16,72 +16,90 @@ let buttonCloseAdd = popupAdd.querySelector('.popup-add__close-button');
 
 const buttonDelete = document.querySelector('.element__delete');  //выбор кнопки удаления фото
 
-buttonDelete.addEventListener('click', function() {
-  const listItem = buttonDelete.closest('.element');
-  listItem.remove();
+const initialCards = [    // исходный массив с ссылками на фото и названиями мест
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+const initialCardsName = initialCards.filter(function (item) {   //отфильтрованы из массива названия мест
+  return item.name;
 });
 
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Тульская область',
-      link: 'https://unsplash.com/photos/bmAwGxPwXww'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Карелия',
-      link: 'https://unsplash.com/photos/B5xl3aXVswI'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
+const initialCardsLink = initialCards.filter(function (item) {   //отфильтрованы из массива ссылки
+  return item.link;
+});
+
+const template = document.querySelector('#element').content;
+const element = document.querySelector('.element');
+
+const cloneElement = template.querySelector('.element').cloneNode(true);
+cloneElement.querySelector('.element__link').src = 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg';
+cloneElement.querySelector('.element__title').textContent = 'Байкал';
+
+element.prepend(cloneElement);      // отображение на странице
+
 
 function fnClose() {             //ф-ция закрытия попапа редактирования профиля
-    popup.classList.remove('popup_opened');
+  popup.classList.remove('popup_opened');
 }
 
 function fnCloseAdd() {             //ф-ция закрытия попапа добавления фото
-    popupAdd.classList.remove('popupAdd_opened');
+  popupAdd.classList.remove('popupAdd_opened');
 }
 
 
 
 function handleFormSubmit(evt) {      //функция заполнения формы 
-    evt.preventDefault();             //попапа редактирования профиля    
+  evt.preventDefault();             //попапа редактирования профиля    
 
-    profileName.textContent;
-    profileJob.textContent;
+  profileName.textContent;
+  profileJob.textContent;
 
-    profileName.textContent = popupName.value;
-    profileJob.textContent = popupJob.value;
+  profileName.textContent = popupName.value;
+  profileJob.textContent = popupJob.value;
 
-    fnClose()      
+  fnClose()
 }
 popupForm.addEventListener('submit', handleFormSubmit);
 
 buttonEdit.addEventListener('click', () => {      //слушатель события //Добавить информацию
-    popup.classList.add('popup_opened');
-    popupName.value = profileName.textContent;
-    popupJob.value = profileJob.textContent;
+  popup.classList.add('popup_opened');
+  popupName.value = profileName.textContent;
+  popupJob.value = profileJob.textContent;
 });
 
 buttonClose.addEventListener('click', fnClose) //слушатель события //закрыть попап редактирования профиля
 
 buttonAdd.addEventListener('click', () => {      //слушатель события //Добавить новое место
-    popupAdd.classList.add('popupAdd_opened');
+  popupAdd.classList.add('popupAdd_opened');
 });
 
 buttonCloseAdd.addEventListener('click', fnCloseAdd) //слушатель события //закрыть попап добавления фото
 
+/* buttonDelete.addEventListener('click', function() {   //слушатель события // удаление карточки
+  const listItem = buttonDelete.closest('.element');
+  listItem.remove();
+});
+ */
