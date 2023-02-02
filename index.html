@@ -30,8 +30,9 @@
         </section>
         <section>
             <ul class="elements">
+                <div class="element"></div> <!-- вот тут вопрос -->
                 <template id="element">
-                  <li class="element">
+                    <li class="element">
                         <div class="element__image">
                             <button class="element__delete" type="button" aria-label="удаление"></button>
                             <img src="images/karachaevsk.jpg" class="element__link" alt="Карачаевск">
@@ -40,58 +41,8 @@
                             <h2 class="element__title">Карачаевск</h2>
                             <button class="element__like" type="button" aria-label="лайк"></button>
                         </div>
-                  </li>
+                    </li>
                 </template>
-                <li class="element">
-                    <div class="element__image">
-                      <button class="element__delete" type="button" aria-label="удаление"></button>
-                      <img src="images/elbrus.jpg" class="element__photo" alt="Эльбрус">
-                    </div>  
-                    <div class="element__caption">
-                        <h2 class="element__title">Гора Эльбрус</h2>
-                        <button class="element__like" type="button" aria-label="лайк"></button>
-                    </div>
-                </li>
-                <!-- <li class="element">
-                    <div class="element__image">
-                        <button class="element__delete" type="button" aria-label="удаление"></button>
-                        <img src="images/dombay.jpg" class="element__photo" alt="Домбай">
-                    </div>
-                    <div class="element__caption">
-                        <h2 class="element__title">Домбай</h2>
-                        <button class="element__like" type="button" aria-label="лайк"></button>
-                    </div>
-                </li>
-                <li class="element">
-                    <div class="element__image">
-                        <button class="element__delete" type="button" aria-label="удаление"></button>
-                        <img src="images/elbrus.jpg" class="element__photo" alt="Эльбрус">
-                    </div>
-                    <div class="element__caption">
-                        <h2 class="element__title">Гора Эльбрус</h2>
-                        <button class="element__like" type="button" aria-label="лайк"></button>
-                    </div>
-                </li>
-                <li class="element">
-                    <div class="element__image">
-                        <button class="element__delete" type="button" aria-label="удаление"></button>
-                        <img src="images/dombay.jpg" class="element__photo" alt="Домбай">
-                    </div>
-                    <div class="element__caption">
-                        <h2 class="element__title">Домбай</h2>
-                        <button class="element__like" type="button" aria-label="лайк"></button>
-                    </div>
-                </li>
-                <li class="element">
-                    <div class="element__image">
-                        <button class="element__delete" type="button" aria-label="удаление"></button>
-                        <img src="images/karachaevsk.jpg" class="element__photo" alt="Карачаевск">
-                    </div>
-                    <div class="element__caption">
-                        <h2 class="element__title">Карачаевск</h2>
-                        <button class="element__like" type="button" aria-label="лайк"></button>
-                    </div>
-                </li> -->
             </ul>
         </section>
     </main>
@@ -123,8 +74,11 @@
         </div>
     </div>
     <div class="popup-photo">
-        <img src="images/karachaevsk.jpg" class="element__link element__link_size_big" alt="Карачаевск">
-        <h2 class="element__title element__title_size_big">Карачаевск</h2>
+        <div class="popup-photo__container">
+            <img src="images/karachaevsk.jpg" class="element__link element__link_size_big" alt="Карачаевск">
+            <h2 class="element__title element__title_size_big">Карачаевск</h2>
+            <button class="popup-photo__close-button" type="button" aria-label="Закрыть"></button>
+        </div>
     </div>
     <script src="scripts/index.js"></script>
 </body>

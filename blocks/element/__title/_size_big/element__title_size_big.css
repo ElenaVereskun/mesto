@@ -3,4 +3,8 @@
     font-size: 12px;
     line-height: 15px;
     color: white;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    justify-self: start;
 }

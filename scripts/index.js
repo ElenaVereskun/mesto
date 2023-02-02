@@ -16,6 +16,8 @@ let buttonCloseAdd = popupAdd.querySelector('.popup-add__close-button');
 
 const buttonDelete = document.querySelector('.element__delete');  //выбор кнопки удаления фото
 
+/* let popupBigPhoto = document.querySelector('..element__link_size_big'); //выбор элемента большое фото */
+
 const initialCards = [    // исходный массив с ссылками на фото и названиями мест
   {
     name: 'Архыз',
@@ -69,6 +71,9 @@ function fnCloseAdd() {             //ф-ция закрытия попапа д
   popupAdd.classList.remove('popupAdd_opened');
 }
 
+function fnCloseBigPhoto() {             //ф-ция закрытия попапа 'большое фото'
+  popupBigPhoto.classList.remove('popup-photo_opened');
+}
 
 
 function handleFormSubmit(evt) {      //функция заполнения формы 
@@ -81,6 +86,15 @@ function handleFormSubmit(evt) {      //функция заполнения фо
   profileJob.textContent = popupJob.value;
 
   fnClose()
+}
+popupForm.addEventListener('submit', handleFormSubmit);
+
+function handleFormSubmit(evt) {      //функция заполнения формы 
+  evt.preventDefault();             //добавить карточкуб, название места и ссылка  
+
+  //добавить ввод полей = добавление в карточку
+
+  fnCloseAdd()
 }
 popupForm.addEventListener('submit', handleFormSubmit);
 
@@ -98,8 +112,8 @@ buttonAdd.addEventListener('click', () => {      //слушатель событ
 
 buttonCloseAdd.addEventListener('click', fnCloseAdd) //слушатель события //закрыть попап добавления фото
 
-/* buttonDelete.addEventListener('click', function() {   //слушатель события // удаление карточки
+buttonDelete.addEventListener('click', function() {   //слушатель события // удаление карточки
   const listItem = buttonDelete.closest('.element');
   listItem.remove();
 });
- */
+

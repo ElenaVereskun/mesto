@@ -1,7 +1,10 @@
 .element__link_size_big {
-    display: flex;
-    max-width: 75vw;
-    max-height: 75vh;
     border-radius: 0;
-    
+    max-width: 240px;
+}
+
+@media screen and (min-width: 1280px) {
+    .element__link_size_big {
+        max-width: 433px;
+    }
 }
