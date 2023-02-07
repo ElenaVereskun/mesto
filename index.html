@@ -30,19 +30,20 @@
         </section>
         <section>
             <ul class="elements">
-                <div class="element"></div> <!-- вот тут вопрос -->
-                <template id="element">
-                    <li class="element">
-                        <div class="element__image">
-                            <button class="element__delete" type="button" aria-label="удаление"></button>
-                            <img src="images/karachaevsk.jpg" class="element__link" alt="Карачаевск">
-                        </div>
-                        <div class="element__caption">
-                            <h2 class="element__title">Карачаевск</h2>
-                            <button class="element__like" type="button" aria-label="лайк"></button>
-                        </div>
-                    </li>
-                </template>
+                <div class="card">
+                    <template id="element-template">
+                        <li class="element">
+                            <div class="element__image">
+                                <button class="element__delete" type="button" aria-label="удаление"></button>
+                                <img src="images/karachaevsk.jpg" class="element__link" alt="Карачаевск">
+                            </div>
+                            <div class="element__caption">
+                                <h2 class="element__title">Карачаевск</h2>
+                                <button class="element__like" type="button" aria-label="лайк"></button>
+                            </div>
+                        </li>
+                    </template>
+                </div>
             </ul>
         </section>
     </main>
@@ -67,7 +68,7 @@
             <h2 class="popup-add__title">Новое место</h2>
             <form class="popup-add__form" name="поп-ап">
                 <input class="popup-add__place" type="text" name="place" placeholder=" " value="Название" required>
-                <input class="popup-add__link" type=" " name="link" placeholder=" " value="Ссылка на картинку" required>
+                <input class="popup-add__link" src="#" type="image/*" name="link" placeholder=" " value="Ссылка на картинку" required>
                 <button class="popup-add__save-button" type="submit" aria-label="Создать">Создать</button>
                 <button class="popup-add__close-button" type="button" aria-label="Закрыть"></button>
             </form>

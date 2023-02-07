@@ -16,4 +16,5 @@
 
 .element__like:active {
     color: black;
+    background-image: url(../../../images/element-like-aktive.svg);
 }
