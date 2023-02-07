@@ -18,9 +18,6 @@ let popupAddPlace = popupAdd.querySelector('.popup-add__place');
 
 const buttonLike = document.querySelector('.element__like'); //выбор кнопки лайк
 
-let popupPhoto = document.querySelector('.popup-photo');
-let popupLink = document.querySelector('.element__link');
-let popupBigPhoto = document.querySelector('.element__link_size_big'); //выбор элемента большое фото
 
 const initialCards = [    // исходный массив с ссылками на фото и названиями мест
   {
@@ -49,25 +46,19 @@ const initialCards = [    // исходный массив с ссылками �
   }
 ];
 
-function initialCardsLink() {
+function initialCardsLink() {              //список ссылок из массива
   for (let a = 0; a < 6; a++) {
     console.log(initialCards[a].link)
   };
 };
 initialCardsLink();
 
-function initialCardsName() {
+function initialCardsName() {              //список названий мест из массива
   for (let b = 0; b < 6; b++) {
     console.log(initialCards[b].name)
   };
 };
 initialCardsName();
-
-
-
-
-
-
 
 function cardCreate() {              //функция создания карточки
 
@@ -83,16 +74,13 @@ function cardCreate() {              //функция создания карт�
 
 cardCreate();             //вызов функции создания карточки
 
+
 function fnClose() {             //ф-ция закрытия попапа редактирования профиля
   popup.classList.remove('popup_opened');
 }
 
 function fnCloseAdd() {             //ф-ция закрытия попапа добавления фото
   popupAdd.classList.remove('popupAdd_opened');
-}
-
-function fnCloseBigPhoto() {             //ф-ция закрытия попапа 'большое фото'
-  popupBigPhoto.classList.remove('popup-photo_opened');
 }
 
 
@@ -138,9 +126,19 @@ buttonAdd.addEventListener('click', () => {      //слушатель событ
   popupAdd.classList.add('popupAdd_opened');
 });
 
-popupLink.addEventListener('click', () => {      //слушатель события //открыть попап 'Большое фото' AAAAAAAAAAAAA
-  document.classList.add('element__link_size_big');
+let popupPhoto = document.querySelector('.popup-photo');   //выбор элементов "большое фото"
+let popupLink = document.querySelector('.element__link');
+let popupPhotoClose = popupPhoto.querySelector('.popup-photo__close-button');
+
+popupLink.addEventListener('click', () => {      //слушатель события //открыть попап 'Большое фото'
+  popupPhoto.classList.add('popup-photo_opened');
 });
+
+function fnCloseBigPhoto() {             //ф-ция закрытия попапа 'большое фото'
+  popupPhoto.classList.remove('popup-photo_opened');
+}
+
+popupPhotoClose.addEventListener('click', fnCloseBigPhoto) //слушатель события //закрыть попап Большое фото
 
 buttonCloseAdd.addEventListener('click', fnCloseAdd) //слушатель события //закрыть попап добавления фото
 
