@@ -8,13 +8,3 @@
     margin-bottom: 30px;
     border: none;
 }
-
-.element__like:hover {
-    cursor: pointer;
-    opacity: 0.5;
-}
-
-.element__like:active {
-    color: black;
-    background-image: url(../../../images/element-like-aktive.svg);
-}

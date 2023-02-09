@@ -16,8 +16,31 @@ let buttonCloseAdd = popupAdd.querySelector('.popup-add__close-button');
 let popupAddLink = popupAdd.querySelector('.popup-add__link');
 let popupAddPlace = popupAdd.querySelector('.popup-add__place');
 
-const buttonLike = document.querySelector('.element__like'); //выбор кнопки лайк
+//попап редактирования профиля
+function fnClose() {             //ф-ция закрытия попапа редактирования профиля
+  popup.classList.remove('popup_opened');
+};
 
+function handleFormSubmit(evt) {      //функция заполнения формы 
+  evt.preventDefault();             //попапа редактирования профиля    
+
+  profileName.textContent;
+  profileJob.textContent;
+
+  profileName.textContent = popupName.value;
+  profileJob.textContent = popupJob.value;
+
+  fnClose()
+};
+popupForm.addEventListener('submit', handleFormSubmit);
+
+buttonEdit.addEventListener('click', () => {      //слушатель события //Добавить информацию
+  popup.classList.add('popup_opened');
+  popupName.value = profileName.textContent;
+  popupJob.value = profileJob.textContent;
+});
+
+buttonClose.addEventListener('click', fnClose); //слушатель события //закрыть попап редактирования профиля
 
 const initialCards = [    // исходный массив с ссылками на фото и названиями мест
   {
@@ -46,92 +69,89 @@ const initialCards = [    // исходный массив с ссылками �
   }
 ];
 
-function initialCardsLink() {              //список ссылок из массива
+/* function initialCardsLink() {
   for (let a = 0; a < 6; a++) {
     console.log(initialCards[a].link)
   };
 };
 initialCardsLink();
 
-function initialCardsName() {              //список названий мест из массива
+function initialCardsName() {
   for (let b = 0; b < 6; b++) {
     console.log(initialCards[b].name)
   };
 };
-initialCardsName();
+initialCardsName(); */
+/* for (let a = 0; a < 6; a++)
+  console.log(initialCards[a].link)
+for (let b = 0; b < 6; b++)
+  console.log(initialCards[b].name) */
 
-function cardCreate() {              //функция создания карточки
-
-  const template = document.querySelector('#element-template').content;
-  const element = document.querySelector('.card');
-
-  const cloneElement = template.querySelector('.element').cloneNode(true);
-  cloneElement.querySelector('.element__link').src = initialCards[0].link;
-  cloneElement.querySelector('.element__title').textContent = initialCards[0].name;
-
-  element.prepend(cloneElement);      // отображение на странице
-};
-
-cardCreate();             //вызов функции создания карточки
-
-
-function fnClose() {             //ф-ция закрытия попапа редактирования профиля
-  popup.classList.remove('popup_opened');
-}
-
-function fnCloseAdd() {             //ф-ция закрытия попапа добавления фото
-  popupAdd.classList.remove('popupAdd_opened');
-}
-
-
-function handleFormSubmit(evt) {      //функция заполнения формы 
-  evt.preventDefault();             //попапа редактирования профиля    
-
-  profileName.textContent;
-  profileJob.textContent;
-
-  profileName.textContent = popupName.value;
-  profileJob.textContent = popupJob.value;
-
-  fnClose()
-}
-popupForm.addEventListener('submit', handleFormSubmit);
-
-function handleFormSubmit(evt) {      //функция заполнения формы 
-  evt.preventDefault();             //добавить карточку, название места и ссылка  
-
-  cloneElement.querySelector('.element__link').src = popupAddLink.src;
-  cloneElement.querySelector('.element__title').textContent = popupAddPlace.value;
-
-  fnCloseAdd()
-}
-popupAdd.addEventListener('submit', handleFormSubmit);
-
-buttonEdit.addEventListener('click', () => {      //слушатель события //Добавить информацию
-  popup.classList.add('popup_opened');
-  popupName.value = profileName.textContent;
-  popupJob.value = profileJob.textContent;
+let initialCardsName = initialCards.forEach(item => {              //список названий мест из массива
+  return item['name'];
 });
 
-/* buttonLike.addEventListener('click', () => {
-  if ($(this).hasClass('element__like_active'))
-    $(this).removeClass('element__like_active');
-else
-    $(this).addClass('element__like_active');
-}); */
+let initialCardsLink = initialCards.forEach(item => {              //список ссылок из массива
+  return item['link'];
+});
 
-buttonClose.addEventListener('click', fnClose) //слушатель события //закрыть попап редактирования профиля
+const template = document.querySelector('#element-template').content;
+const elements = document.querySelector('.elements');
 
+function cardCreate() {              //функция создания карточки
+  const cloneElement = template.querySelector('.element').cloneNode(true);
+  cloneElement.querySelector('.element__link').src = initialCards[4].link;
+  cloneElement.querySelector('.element__title').textContent = initialCards[4].name;
+
+  elements.append(cloneElement);      // отображение на странице
+};
+
+/* cardCreate();   */       //вызов функции создания карточки
+
+function renderCards() {
+  initialCards.forEach(item => {
+    const cardHTML = cardCreate(item);
+    template.append(cardHTML);
+  });
+}
+renderCards();
+
+//создание попапа Добавление новое место
 buttonAdd.addEventListener('click', () => {      //слушатель события //открыть попап 'Добавить новое место'
   popupAdd.classList.add('popupAdd_opened');
 });
 
-let popupPhoto = document.querySelector('.popup-photo');   //выбор элементов "большое фото"
+function fnCloseAdd() {             //ф-ция закрытия попапа добавления новое место
+  popupAdd.classList.remove('popupAdd_opened');
+}
+
+function handleFormSubmit(evt) {      //функция заполнения формы 
+  evt.preventDefault();             //добавить карточку, название места и ссылка  
+  cardCreate();
+  /* popupLink.src = popupAddLink.src;                   ///Удалить если не будут нужны!
+  popupTitle.textContent = popupAddPlace.value; */
+
+  fnCloseAdd()
+};
+
+buttonCloseAdd.addEventListener('click', fnCloseAdd); //слушатель события //закрыть попап добавления фото
+
+popupAdd.addEventListener('submit', handleFormSubmit);
+
+
+
+// создание попапа 'Большое фото'
+let popupPhoto = document.querySelector('.popup-photo');   //выбор элементов для попапа"большое фото"
 let popupLink = document.querySelector('.element__link');
+let popupTitle = document.querySelector('.element__title');
 let popupPhotoClose = popupPhoto.querySelector('.popup-photo__close-button');
+let popupPhotoLink = popupPhoto.querySelector('.popup-photo__link');
+let popupPhotoTitle = popupPhoto.querySelector('.popup-photo__title');
 
 popupLink.addEventListener('click', () => {      //слушатель события //открыть попап 'Большое фото'
   popupPhoto.classList.add('popup-photo_opened');
+  popupPhotoLink.src = popupLink.src;
+  popupPhotoTitle.textContent = popupTitle.textContent;
 });
 
 function fnCloseBigPhoto() {             //ф-ция закрытия попапа 'большое фото'
@@ -140,11 +160,20 @@ function fnCloseBigPhoto() {             //ф-ция закрытия попап
 
 popupPhotoClose.addEventListener('click', fnCloseBigPhoto) //слушатель события //закрыть попап Большое фото
 
-buttonCloseAdd.addEventListener('click', fnCloseAdd) //слушатель события //закрыть попап добавления фото
+
+
+
+//Лайк фото
+let buttonLike = document.querySelector('.element__like'); //выбор кнопки лайк
+
+buttonLike.addEventListener('click', function () {   //слушатель события 
+  buttonLike.classList.toggle('element__like_active');
+});
 
 const buttonDelete = document.querySelector('.element__delete');  //выбор кнопки удаления фото
 
 buttonDelete.addEventListener('click', function () {   //слушатель события // удаление карточки
-  const listItem = buttonDelete.closest('.card');
+  const listItem = buttonDelete.closest('.element');
   listItem.remove();
 });
+

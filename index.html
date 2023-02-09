@@ -10,7 +10,7 @@
 
 <body class="page">
     <header class="header">
-        <img class="header__logo" src="images/logo.svg" alt="логотип">
+        <div class="header__logo"></div>
     </header>
     <main class="content">
         <section class="profile">
@@ -30,20 +30,18 @@
         </section>
         <section>
             <ul class="elements">
-                <div class="card">
-                    <template id="element-template">
-                        <li class="element">
-                            <div class="element__image">
-                                <button class="element__delete" type="button" aria-label="удаление"></button>
-                                <img src="images/karachaevsk.jpg" class="element__link" alt="Карачаевск">
-                            </div>
-                            <div class="element__caption">
-                                <h2 class="element__title">Карачаевск</h2>
-                                <button class="element__like" type="button" aria-label="лайк"></button>
-                            </div>
-                        </li>
-                    </template>
-                </div>
+                <template id="element-template">
+                    <li class="element">
+                        <div class="element__image">
+                            <button class="element__delete" type="button" aria-label="удаление"></button>
+                            <img src=" " class="element__link" alt=" ">
+                        </div>
+                        <div class="element__caption">
+                            <h2 class="element__title"></h2>
+                            <button class="element__like" type="button" aria-label="лайк"></button>
+                        </div>
+                    </li>
+                </template>
             </ul>
         </section>
     </main>
@@ -68,7 +66,8 @@
             <h2 class="popup-add__title">Новое место</h2>
             <form class="popup-add__form" name="поп-ап">
                 <input class="popup-add__place" type="text" name="place" placeholder=" " value="Название" required>
-                <input class="popup-add__link" src="#" type="image/*" name="link" placeholder=" " value="Ссылка на картинку" required>
+                <input class="popup-add__link" src="#" type="image/*" name="link" placeholder=" "
+                    value="Ссылка на картинку" required>
                 <button class="popup-add__save-button" type="submit" aria-label="Создать">Создать</button>
                 <button class="popup-add__close-button" type="button" aria-label="Закрыть"></button>
             </form>
@@ -76,8 +75,8 @@
     </div>
     <div class="popup-photo">
         <div class="popup-photo__container">
-            <img src="images/karachaevsk.jpg" class="popup-photo__link" alt="Карачаевск">
-            <h2 class="popup-photo__title">Карачаевск</h2>
+            <img src=" " class="popup-photo__link" alt=" ">
+            <h2 class="popup-photo__title"></h2>
             <button class="popup-photo__close-button" type="button" aria-label="Закрыть"></button>
         </div>
     </div>
