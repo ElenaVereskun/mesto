@@ -17,6 +17,12 @@ let popupAddLink = popupAdd.querySelector('.popup-add__link');
 let popupAddPlace = popupAdd.querySelector('.popup-add__place');
 
 //попап редактирования профиля
+buttonEdit.addEventListener('click', () => {      //слушатель события //Добавить информацию
+  popup.classList.add('popup_opened');
+  popupName.value = profileName.textContent;
+  popupJob.value = profileJob.textContent;
+  });
+
 function fnClose() {             //ф-ция закрытия попапа редактирования профиля
   popup.classList.remove('popup_opened');
 };
@@ -34,13 +40,9 @@ function handleFormSubmit(evt) {      //функция заполнения фо
 };
 popupForm.addEventListener('submit', handleFormSubmit);
 
-buttonEdit.addEventListener('click', () => {      //слушатель события //Добавить информацию
-  popup.classList.add('popup_opened');
-  popupName.value = profileName.textContent;
-  popupJob.value = profileJob.textContent;
-});
-
 buttonClose.addEventListener('click', fnClose); //слушатель события //закрыть попап редактирования профиля
+
+
 
 const initialCards = [    // исходный массив с ссылками на фото и названиями мест
   {
@@ -68,8 +70,8 @@ const initialCards = [    // исходный массив с ссылками �
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
-/* function initialCardsLink() {
+/* 
+function initialCardsLink() {
   for (let a = 0; a < 6; a++) {
     console.log(initialCards[a].link)
   };
@@ -78,43 +80,41 @@ initialCardsLink();
 
 function initialCardsName() {
   for (let b = 0; b < 6; b++) {
-    console.log(initialCards[b].name)
+   return initialCards[b].name;
   };
-};
-initialCardsName(); */
+}; */
 /* for (let a = 0; a < 6; a++)
   console.log(initialCards[a].link)
 for (let b = 0; b < 6; b++)
   console.log(initialCards[b].name) */
-
-let initialCardsName = initialCards.forEach(item => {              //список названий мест из массива
+let initialCardsName = initialCards.map(function (item) {    //массив с названиями мест
   return item['name'];
 });
-
-let initialCardsLink = initialCards.forEach(item => {              //список ссылок из массива
+console.log(initialCardsName);
+let initialCardsLink = initialCards.map(function (item) {    //массив ссылок на фото
   return item['link'];
 });
-
+console.log(initialCardsLink);
 const template = document.querySelector('#element-template').content;
 const elements = document.querySelector('.elements');
 
 function cardCreate() {              //функция создания карточки
   const cloneElement = template.querySelector('.element').cloneNode(true);
-  cloneElement.querySelector('.element__link').src = initialCards[4].link;
-  cloneElement.querySelector('.element__title').textContent = initialCards[4].name;
+  const cloneElementLink = cloneElement.querySelector('.element__link');
+  const cloneElementName = cloneElement.querySelector('.element__title');
 
+  cloneElementLink.src = initialCards[1].link;
+  cloneElementName.textContent = initialCards[1].name;
   elements.append(cloneElement);      // отображение на странице
 };
 
-/* cardCreate();   */       //вызов функции создания карточки
-
-function renderCards() {
+function cardsRender() {
   initialCards.forEach(item => {
     const cardHTML = cardCreate(item);
     template.append(cardHTML);
   });
-}
-renderCards();
+};
+cardsRender();
 
 //создание попапа Добавление новое место
 buttonAdd.addEventListener('click', () => {      //слушатель события //открыть попап 'Добавить новое место'
@@ -127,16 +127,14 @@ function fnCloseAdd() {             //ф-ция закрытия попапа д
 
 function handleFormSubmit(evt) {      //функция заполнения формы 
   evt.preventDefault();             //добавить карточку, название места и ссылка  
-  cardCreate();
-  /* popupLink.src = popupAddLink.src;                   ///Удалить если не будут нужны!
-  popupTitle.textContent = popupAddPlace.value; */
+  /* cardCreate(); */
+  popupLink.src = popupAddLink.src;                   ///Удалить если не будут нужны!
+  popupTitle.textContent = popupAddPlace.value;
 
   fnCloseAdd()
 };
-
-buttonCloseAdd.addEventListener('click', fnCloseAdd); //слушатель события //закрыть попап добавления фото
-
 popupAdd.addEventListener('submit', handleFormSubmit);
+buttonCloseAdd.addEventListener('click', fnCloseAdd); //слушатель события //закрыть попап добавления фото
 
 
 
@@ -160,9 +158,6 @@ function fnCloseBigPhoto() {             //ф-ция закрытия попап
 
 popupPhotoClose.addEventListener('click', fnCloseBigPhoto) //слушатель события //закрыть попап Большое фото
 
-
-
-
 //Лайк фото
 let buttonLike = document.querySelector('.element__like'); //выбор кнопки лайк
 
@@ -170,10 +165,10 @@ buttonLike.addEventListener('click', function () {   //слушатель соб
   buttonLike.classList.toggle('element__like_active');
 });
 
+//Удаление фото
 const buttonDelete = document.querySelector('.element__delete');  //выбор кнопки удаления фото
 
 buttonDelete.addEventListener('click', function () {   //слушатель события // удаление карточки
   const listItem = buttonDelete.closest('.element');
   listItem.remove();
 });
-
