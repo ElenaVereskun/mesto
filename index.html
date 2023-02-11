@@ -28,7 +28,7 @@
                 <img class="profile__add-button-centre" src="images/add-button.svg" alt="добавить">
             </button>
         </section>
-        <section>
+        <div>
             <ul class="elements">
                 <template id="element-template">
                     <li class="element">
@@ -43,7 +43,7 @@
                     </li>
                 </template>
             </ul>
-        </section>
+        </div>
     </main>
     <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
@@ -66,8 +66,7 @@
             <h2 class="popup-add__title">Новое место</h2>
             <form class="popup-add__form" name="поп-ап">
                 <input class="popup-add__place" type="text" name="place" placeholder=" " value="Название" required>
-                <input class="popup-add__link" src="#" type="image/*" name="link" placeholder=" "
-                    value="Ссылка на картинку" required>
+                <input class="popup-add__link" type="text" name="link" placeholder=" " value="Ссылка на картинку" required>
                 <button class="popup-add__save-button" type="submit" aria-label="Создать">Создать</button>
                 <button class="popup-add__close-button" type="button" aria-label="Закрыть"></button>
             </form>
@@ -75,8 +74,8 @@
     </div>
     <div class="popup-photo">
         <div class="popup-photo__container">
-            <img src=" " class="popup-photo__link" alt=" ">
-            <h2 class="popup-photo__title"></h2>
+            <img src="#" class="popup-photo__link" alt="ссылка на фото">
+            <h2 class="popup-photo__title">заголовок</h2>
             <button class="popup-photo__close-button" type="button" aria-label="Закрыть"></button>
         </div>
     </div>

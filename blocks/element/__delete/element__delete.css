@@ -10,12 +10,12 @@
         top: 0px;
         background-color: transparent;
     }
-    
+
     .element__delete:hover {
         cursor: pointer;
         opacity: 0.5;
     }
-    
+
     .element__delete:active {
         color: black;
     }

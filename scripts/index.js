@@ -20,6 +20,7 @@ const buttonAdd = document.querySelector('.profile__add-button'); //которы
 const buttonCloseAdd = popupAdd.querySelector('.popup-add__close-button');
 const popupAddLink = document.querySelector('.popup-add__link');
 const popupAddPlace = document.querySelector('.popup-add__place');
+const popupAddForm = popupAdd.querySelector('.popup-add__form');
 
 
 //попап редактирования профиля
@@ -88,28 +89,31 @@ function closePopupPhotoFn() {             //ф-ция закрытия попа
 
 popupPhotoClose.addEventListener('click', closePopupPhotoFn) //слушатель события //закрыть попап Большое фото
 
-buttonAdd.addEventListener('click', () => {      //слушатель события //открыть попап 'Новая карточка'
-  popupAdd.classList.add('popupAdd_opened');
-});
 
-function closePopupAddFn() {             //ф-ция закрытия попапа добавления новой карточки
-  popupAdd.classList.remove('popupAdd_opened');
-}
 
 const template = document.querySelector('#element-template').content;  //выбор template элемента для создания карточки
 const elements = document.querySelector('.elements');
+
+elements.addEventListener('click', (evt) => {   //слушатель события // удаление карточки
+  if (evt.target.classList.contains('element__delete')) {
+    handleDelete(evt)
+  }
+});
 
 function createCard(item) {              //функция создания карточки
   const cloneElement = template.querySelector('.element').cloneNode(true);
   const cloneElementLink = cloneElement.querySelector('.element__link');
   const cloneElementName = cloneElement.querySelector('.element__title');
   const buttonLike = cloneElement.querySelector('.element__like');
-  const buttonDelete = cloneElement.querySelectorAll('.element__delete');
 
-  /* buttonDelete.addEventListener('click', () => {   //слушатель события // удаление карточки
-    buttonDelete.closest('.element').remove();
+ /*  popupAddForm.addEventListener('submit', (evt) => {      //слушатель события //Добавить новую карточку
+    evt.preventDefault();
+    elements.prepend(item);   //создается пустая карточка
+    item.src = popupAddLink.value;
+    item.textContent = popupAddPlace.value;
+    closePopupAddFn();
   }); */
- 
+
   buttonLike.addEventListener('click', () => {   //слушатель события // лайк фото
     buttonLike.classList.toggle('element__like_active');
   });
@@ -120,17 +124,30 @@ function createCard(item) {              //функция создания ка�
     popupPhotoTitle.textContent = cloneElementName.textContent;
   });
 
-  popupAdd.addEventListener('submit', (evt) => {      //слушатель события //Добавить новую карточку
-    evt.preventDefault();
-    cloneElementLink.src = popupAddLink.src;
-    cloneElementName.textContent = popupAddPlace.value;
-    closePopupAddFn();
-  }); 
-
   cloneElementLink.src = item.link;
   cloneElementName.textContent = item.name;
   return cloneElement;
 };
+
+buttonAdd.addEventListener('click', () => {      //слушатель события //открыть попап 'Новая карточка'
+  popupAdd.classList.add('popupAdd_opened');
+});
+
+function closePopupAddFn() {             //ф-ция закрытия попапа добавления новой карточки
+  popupAdd.classList.remove('popupAdd_opened');
+}
+
+function addCard(card){       //функция добавления новой карточки
+  elements.prepend(card);
+}
+
+function submitForm(event){    //заполнение формы и добавление карточки на страницу
+  event.preventDefault();
+  const newCard = createCard(popupAddLink.value,popupAddPlace.value);
+  addCard(newCard);
+  closePopupAddFn();
+}
+popupAdd.addEventListener('submit', submitForm);
 
 const renderCards = (elements, item) => {       // создание карточек
   elements.append(createCard(item))
