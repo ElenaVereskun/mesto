@@ -3,6 +3,7 @@
     height: 19px;
     background-image: url(../../../images/element-like.svg);
     background-color: white;
+    background-repeat: no-repeat;
     margin-top: 30px;
     margin-right: 20px;
     margin-bottom: 30px;
