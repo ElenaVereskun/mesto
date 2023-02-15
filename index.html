@@ -48,35 +48,35 @@
     <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
-        <div class="popup__container">
-            <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__form" name="поп-ап">
-                <input class="popup__user popup__user_info_name" type="text" name="name" placeholder=" " value=" "
+    <div class="popup profile-popup">
+        <div class="profile-popup__container">
+            <h2 class="profile-popup__title">Редактировать профиль</h2>
+            <form class="profile-popup__form" name="поп-ап">
+                <input class="profile-popup__user profile-popup__user_info_name" type="text" name="name" placeholder=" " value=" "
                     required>
-                <input class="popup__user popup__user_info_job" type="text" name="job" placeholder=" " value=" "
+                <input class="profile-popup__user profile-popup__user_info_job" type="text" name="job" placeholder=" " value=" "
                     required>
-                <button class="popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
-                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+                <button class="profile-popup__save-button" type="submit" aria-label="Сохранить">Сохранить</button>
+                <button class="popup__close-button profile-popup__close-button" type="button" aria-label="Закрыть"></button>
             </form>
         </div>
     </div>
-    <div class="popup-add">
+    <div class="popup popup-add">
         <div class="popup-add__container">
             <h2 class="popup-add__title">Новое место</h2>
             <form class="popup-add__form" name="поп-ап">
-                <input class="popup-add__place" type="text" name="place" placeholder=" " value="Название" required>
-                <input class="popup-add__link" type="text" name="link" placeholder=" " value="Ссылка на картинку" required>
+                <input class="popup-add__place" type="text" name="place" placeholder="Название" required>
+                <input class="popup-add__link" type="text" name="link" placeholder="Ссылка на картинку" required>
                 <button class="popup-add__save-button" type="submit" aria-label="Создать">Создать</button>
-                <button class="popup-add__close-button" type="button" aria-label="Закрыть"></button>
+                <button class="popup__close-button popup-add__close-button" type="button" aria-label="Закрыть"></button>
             </form>
         </div>
     </div>
-    <div class="popup-photo">
+    <div class="popup popup-photo">
         <div class="popup-photo__container">
-            <img src="#" class="popup-photo__link" alt="ссылка на фото">
+            <img src="#" class="popup-photo__link" alt=" ">
             <h2 class="popup-photo__title">заголовок</h2>
-            <button class="popup-photo__close-button" type="button" aria-label="Закрыть"></button>
+            <button class="popup__close-button popup-photo__close-button" type="button" aria-label="Закрыть"></button>
         </div>
     </div>
     <script src="scripts/index.js"></script>
