@@ -32,6 +32,7 @@ function openPopup(popup) {            //ф-ция открытия попапа
   popup.classList.add('popup_opened');
 };
 
+
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
   openPopup(popupAdd);
 });
@@ -149,3 +150,9 @@ const renderCards = (elements, item) => {       // создание карточ
 initialCards.forEach(item => {
   renderCards(elements, item)
 });
+
+function keyEscHandler (evt) { //функция добавления карточки через Enter
+  if(evt.key === 'Enter') {
+    addCard(popupAddLink.value, popupAddPlace.value);
+  }
+ };

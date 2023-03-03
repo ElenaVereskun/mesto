@@ -1,0 +1,19 @@
+.popup__form_valid_place {
+    display: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FF0000;
+    margin-left: 22px;
+    margin-right: 22px;
+    border-top: 1px solid #FF0000;
+}
+
+@media screen and (min-width: 1280px) {
+    .popup__form_valid_place {
+        margin-left: 36px;
+        margin-right: 36px;
+    }
+}
