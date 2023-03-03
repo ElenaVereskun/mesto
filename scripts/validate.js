@@ -36,11 +36,19 @@
     element.paternNode.classList.remove('popup__form_valid');
     element.textContent = '';
   } */
-const input = profilePopupForm.querySelector('.profile-popup__user');
-const inputs = profilePopupForm.querySelectorAll('.profile-popup__user');
-const profileSaveButton = profilePopupForm.querySelector('.profile-popup__save-button');
+const enableValidation = () => {
 
-inputs.forEach(input => {
+}
+
+const setEventListeners = () => {
+  
+}
+
+const input = profilePopupForm.querySelector('.profile-popup__user');  //находим первый инпут в форме
+const inputs = Array.from(profilePopupForm.querySelectorAll('.profile-popup__user')); //массив всех импутов
+const profileSaveButton = profilePopupForm.querySelector('.profile-popup__save-button'); //кнопка сохранить
+
+inputs.forEach(input => {    // обходим массив импутов
   input.addEventListener('input', () => {
     const isValid = input.validity.valid;
     inputForm = input.parentNode;
@@ -53,25 +61,20 @@ inputs.forEach(input => {
       errorInput.innerText = input.validationMessage;
       errorInput.classList.add('profile-popup__error_active');
     }
+    toggleProfileSaveButton(inputs, profileSaveButton);
   });
 });
 
-let formIsValid = true;
-for(let i = 0; i < inputs.length; i++) {
-  const input = inputs[i];
-  const isValid = input.validity.valid;
-  if(!isValid) {
-    formIsValid = false;
-    break;
-  }
-}
 
-if(formIsValid) {
-  profileSaveButton.disabled ='';
-  profileSaveButton.classList.remove('profile-popup__save-button_inactive');
-}else{
-  profileSaveButton.disabled ='true';
-  profileSaveButton.classList.add('profile-popup__save-button_inactive');
-}
-profileSaveButton.disabled ='';
- profileSaveButton.classList.remove('profile-popup__save-button_inactive');
+const toggleProfileSaveButton = (inputs, profileSaveButton) => {   //активна кнопка, если оба поля валидны
+  const formIsValid = inputs.every(input => input.validity.valid);                 
+     
+   if(formIsValid) {
+     profileSaveButton.removeAttribute('disabled');
+     profileSaveButton.classList.remove('profile-popup__save-button_inactive');
+   }else{
+     profileSaveButton.setAttribute('disabled', 'true');
+     profileSaveButton.classList.add('profile-popup__save-button_inactive');
+   }
+};
+toggleProfileSaveButton(inputs, profileSaveButton);
