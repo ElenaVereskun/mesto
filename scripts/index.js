@@ -24,14 +24,20 @@ const popupAddForm = popupAdd.querySelector('.popup-add__form');
 
 const popup = document.querySelector('.popup');
 
+function keyEscHandler (evt) { //функция закрытия попапа через Esc
+  if(evt.key === 'Escape') {
+    closePopup(popup);
+  }
+ };
+
 function closePopup(popup) {           //ф-ция закрытия попапа
   popup.classList.remove('popup_opened');
 };
 
 function openPopup(popup) {            //ф-ция открытия попапа
   popup.classList.add('popup_opened');
+  popup.addEventListener('keydown', keyEscHandler);
 };
-
 
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
   openPopup(popupAdd);
@@ -151,7 +157,7 @@ initialCards.forEach(item => {
   renderCards(elements, item)
 });
 
-function keyEscHandler (evt) { //функция добавления карточки через Enter
+function keyEnterHandler (evt) { //функция добавления карточки через Enter
   if(evt.key === 'Enter') {
     addCard(popupAddLink.value, popupAddPlace.value);
   }

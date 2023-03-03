@@ -1,4 +1,4 @@
-.popup__form_valid_place {
+.popup__form_error_place {
     display: none;
     font-family: 'Inter';
     font-style: normal;
@@ -12,7 +12,7 @@
 }
 
 @media screen and (min-width: 1280px) {
-    .popup__form_valid_place {
+    .popup__form_error_place {
         margin-left: 36px;
         margin-right: 36px;
     }
