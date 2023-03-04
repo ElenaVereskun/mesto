@@ -1,80 +1,48 @@
+const formPopup = document.querySelectorAll('form'); //найденЫ формы
 
-/* function enableValidation(form) {
-    
-    const inputs = Array.from(form)/* .filter(i.tagName !== 'BUTTON') */;
-    /*form.addEventListener('submit', (event) => {
-    
-    for(const input of inputs) {
-      if(input.checkValidity()){
-           resetError(input)
-      }else{
-          event.preventDefault()
-          activateError(input)
+const setEventListeners = (formPopup) => {
+  const inputs = Array.from(formPopup.querySelectorAll('input')); //массив всех инпутов
+  const popupSaveButton = formPopup.querySelector('.popup__save-button'); //кнопка сохранить
+
+  inputs.forEach(input => {    // обходим массив импутов
+    input.addEventListener('input', () => {
+      const isValid = input.validity.valid;
+      inputForm = input.parentNode;
+      const errorInput = inputForm.querySelector('.popup__error');
+
+      if (isValid) {
+        errorInput.innerText = '';
+        errorInput.classList.remove('popup__error_active');
+      } else {
+        errorInput.innerText = input.validationMessage;
+        errorInput.classList.add('popup__error_active');
       }
-    }
+      togglePopupSaveButton(inputs, popupSaveButton);
     });
-    inputs.forEach(input => {
-      input.addEventListener('keypress', () =>{
-        for(const input of inputs) {
-          if(input.checkValidity()){
-               resetError(input)
-          }else{
-              activateError(input)
-          }
-        }
-      })
-    })
-  };
-  enableValidation(profilePopupForm);
-  enableValidation(popupAddForm);
-  
-  function activateError(element) { //добавление класса /валидация форм
-    element.paternNode.classList.add('popup__form_valid');
-  }
-  
-  function resetError(element) {   //удаление класса /валидация формы
-    element.paternNode.classList.remove('popup__form_valid');
-    element.textContent = '';
-  } */
-const enableValidation = () => {
-
-}
-
-const setEventListeners = () => {
-  
-}
-
-const input = profilePopupForm.querySelector('.profile-popup__user');  //находим первый инпут в форме
-const inputs = Array.from(profilePopupForm.querySelectorAll('.profile-popup__user')); //массив всех импутов
-const profileSaveButton = profilePopupForm.querySelector('.profile-popup__save-button'); //кнопка сохранить
-
-inputs.forEach(input => {    // обходим массив импутов
-  input.addEventListener('input', () => {
-    const isValid = input.validity.valid;
-    inputForm = input.parentNode;
-    const errorInput = inputForm.querySelector('.profile-popup__error');
-
-    if(isValid){
-      errorInput.innerText = '';
-      errorInput.classList.remove('profile-popup__error_active');
-    }else{
-      errorInput.innerText = input.validationMessage;
-      errorInput.classList.add('profile-popup__error_active');
-    }
-    toggleProfileSaveButton(inputs, profileSaveButton);
   });
-});
 
+  const input = formPopup.querySelector('input');  //находим первый инпут в форме
 
-const toggleProfileSaveButton = (inputs, profileSaveButton) => {   //активна кнопка, если оба поля валидны
-  const formIsValid = inputs.every(input => input.validity.valid);                 
-     
-   if(formIsValid) {
-     profileSaveButton.removeAttribute('disabled');
-     profileSaveButton.classList.remove('profile-popup__save-button_inactive');
-   }else{
-     profileSaveButton.setAttribute('disabled', 'true');
-     profileSaveButton.classList.add('profile-popup__save-button_inactive');
-   }
+  const togglePopupSaveButton = (inputs, popupSaveButton) => {   //активна кнопка, если оба поля валидны
+    const formIsValid = inputs.every(input => input.validity.valid);
+    if (formIsValid) {
+      popupSaveButton.removeAttribute('disabled');
+      popupSaveButton.classList.remove('popup__save-button_inactive');
+      input.classList.remove('popup__input_disabled');
+    } else {
+      popupSaveButton.setAttribute('disabled', 'true');
+      popupSaveButton.classList.add('popup__save-button_inactive');
+      input.classList.add('popup__input_disabled');
+    }
+  };
+  togglePopupSaveButton(inputs, popupSaveButton);
+}
+
+const enableValidation = () => {
+  const forms = Array.from(document.querySelectorAll('form'));  //массив элементов, найденных по тегу
+  forms.forEach(formPopup => {
+    setEventListeners(formPopup);
+  });
 };
-toggleProfileSaveButton(inputs, profileSaveButton);
+enableValidation();
+

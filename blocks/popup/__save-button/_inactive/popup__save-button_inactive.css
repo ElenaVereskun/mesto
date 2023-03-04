@@ -1,5 +1,6 @@
-.profile-popup__save-button_inactive:disabled {
+.popup__save-button_inactive:disabled {
     background-color: #E5E5E5;
     color: black;
     border: 1px solid #000000;
+    opacity: 0.5;
 }
