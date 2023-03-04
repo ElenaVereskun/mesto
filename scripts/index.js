@@ -32,7 +32,7 @@ function keyEscHandler (evt) { //функция закрытия попапа ч
 
 function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
   if (evt.target === evt.currentTarget) {
-    closePopup(popupPhoto);
+    closePopup(popup);
   }
 };
 
