@@ -29,14 +29,20 @@ function keyEscHandler (evt) { //функция закрытия попапа ч
     closePopup(popup);
   }
  };
+function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
+  if (evt.target === evt.currentTarget) {
+    closePopup(popup);
+  }
+};
 
 function closePopup(popup) {           //ф-ция закрытия попапа
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', keyEscHandler);//удаление слушателя события Закрытия попапа по клику на Esc
 };
 
 function openPopup(popup) {            //ф-ция открытия попапа
   popup.classList.add('popup_opened');
-  popup.addEventListener('keydown', keyEscHandler);
+  document.addEventListener('keydown', keyEscHandler);   //слушатель события Закрытия попапа по клику на Esc
 };
 
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
