@@ -30,13 +30,13 @@ function keyEscHandler (evt) { //функция закрытия попапа ч
   }
  };
 
-/* function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
+function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
   if (evt.target === evt.currentTarget) {
-    closePopup(popup);
+    closePopup(popupPhoto);
   }
 };
 
-popup.addEventListener('click', closePopupOverlay);//закрывает не по клику!!!!!!!!!!!!!!!  */
+popup.addEventListener('mousedown', closePopupOverlay);//закрытие попапа по клику на оверлэй
 
 function closePopup(popup) {           //ф-ция закрытия попапа
   popup.classList.remove('popup_opened');
@@ -106,7 +106,7 @@ const handleDelete = (evt) => {             //ф-ция удалить карт�
   evt.target.closest('.element').remove();
 };
 
-const handleLike = () => {             //ф-ция посавить лайк
+const handleLike = () => {             //ф-ция поставить лайк
   buttonLike.classList.toggle('element__like_active');
 };
 

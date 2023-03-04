@@ -4,7 +4,7 @@ const options = {
   inputSelector: '.popup__input',
   inputErrorClass: 'popup__input_disabled',
   inactiveButtonClass: 'popup__save-button_inactive',
-  errorClass: '.popup__error',
+  errorSelector: '.popup__error',
   errorClassActive: 'popup__error_active'
 };
 
@@ -71,7 +71,7 @@ const showError = (errorInput, message) => {  //ф-ция показывает �
 const toggleErrorState = (input, options) => {   //проверка на валидность
   const isValid = input.validity.valid;
   const inputForm = input.closest(options.formSelector);
-  const errorInput = inputForm.querySelector(options.errorClass);
+  const errorInput = inputForm.querySelector(options.errorSelector);
 
   if (isValid) {
     hiddenError(errorInput, options.errorClassActive);
@@ -90,14 +90,21 @@ const disableButton = (popupSaveButton) => { //кнопка не активна
   popupSaveButton.classList.add(options.inactiveButtonClass);
 };
 
+const enableInput = (input) => {
+  input.classList.remove(options.inputErrorClass); //не активное красное подчёркивание инпута
+};
+const disableInput = (input) => {
+  input.classList.add(options.inputErrorClass);  //активно красное подчёркивание инпута
+};
+
 const togglePopupSaveButton = (inputs, popupSaveButton, options) => {   //активна кнопка, если оба поля валидны
   const formIsValid = inputs.every(input => input.validity.valid);
   if (formIsValid) {
     enableButton(popupSaveButton, options.inactiveButtonClass);
-    input.classList.remove(options.inputErrorClass); //не активное красное подчёркивание инпута
+    enableInput(input, options.inputErrorClass);
   } else {
     disableButton(popupSaveButton, options.inactiveButtonClass);
-    input.classList.add(options.inputErrorClass);  //активно красное подчёркивание инпута
+    disableInput(input, options.inputErrorClass);
   }
 };
 
@@ -121,4 +128,4 @@ const enableValidation = (options) => {
   });
 };
 
-enableValidation(options);
+enableValidation(options); //передаём все параметры
