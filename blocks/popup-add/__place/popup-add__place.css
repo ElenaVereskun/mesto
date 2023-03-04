@@ -1,4 +1,5 @@
 .popup-add__place {
+    display: flex;
     position: relative;
     font-weight: 400;
     font-size: 14px;

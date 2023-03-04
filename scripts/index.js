@@ -29,11 +29,14 @@ function keyEscHandler (evt) { //функция закрытия попапа ч
     closePopup(popup);
   }
  };
-function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
+
+/* function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
   if (evt.target === evt.currentTarget) {
     closePopup(popup);
   }
 };
+
+popup.addEventListener('click', closePopupOverlay);//закрывает не по клику!!!!!!!!!!!!!!!  */
 
 function closePopup(popup) {           //ф-ция закрытия попапа
   popup.classList.remove('popup_opened');
