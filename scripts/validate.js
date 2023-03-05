@@ -7,7 +7,6 @@ const options = {
   errorClass: '.popup__error',
   errorClassActive: 'popup__error_active'
 };
-
 const formPopup = document.querySelector(options.formSelector); //найдена форма
 const input = formPopup.querySelector('input');  //находим инпут в форме
 
@@ -24,7 +23,7 @@ const showError = (errorInput, message) => {  //ф-ция показывает �
 const toggleErrorState = (input, options) => {   //проверка на валидность
   const isValid = input.validity.valid;
   const inputForm = input.closest(options.inputSelector);
-  const errorInput = document.querySelector(`.${inputForm.id}-error`); //показ ошибки
+  const errorInput = document.querySelector(`.${inputForm.id}-error`); //показ ошибки под инпутом
 
   if (isValid) {
     hiddenError(errorInput, options.errorClassActive);
@@ -73,5 +72,4 @@ const enableValidation = (options) => {
     setEventListeners(formPopup);
   });
 };
-
 enableValidation(options);
