@@ -24,28 +24,41 @@ const popupAddForm = popupAdd.querySelector('.popup-add__form');
 
 const popup = document.querySelector('.popup');
 
-function keyEscHandler (evt) { //функция закрытия попапа через Esc
-  if(evt.key === 'Escape') {
-    closePopup(popup);
+/* function keyEscHandler (evt) {   //функция закрытия попапа через Esc
+    if(popupEsc.classList.contains('popup_opened') === 'true' && evt.key === 'Escape'){
+     closePopup(popupEsc);
   }
- };
-
-function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
-  if (evt.target === evt.currentTarget) {
-    closePopup(popup);
+};*/
+function keyEscHandler(evt) {  //функция закрытия попапа по клику на 'Escape'
+  const popupSome = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closePopup(popupSome);
   }
 };
 
-popup.addEventListener('mousedown', closePopupOverlay);//закрытие попапа по клику на оверлэй
+function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
+  const popupSome = document.querySelector('.popup_opened');
+  if (evt.target === popupSome) {
+    closePopup(popupSome);
+  }
+};
+document.addEventListener('mousedown', closePopupOverlay);//закрытие попапа по клику на оверлэй
+/* 
+// При клике ВНЕ окна - закрываем его
+modalWindow.addEventListener('click', (e) => {
+  if (e.target === modalWindow) {
+	 closeModal(); // Функция вызывается
+  }
+}); */
 
 function closePopup(popup) {           //ф-ция закрытия попапа
   popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', keyEscHandler);//удаление слушателя события Закрытия попапа по клику на Esc
+  document.removeEventListener('keydown', keyEscHandler); //удаление слушателя события Закрытия попапа по клику на Esc
 };
 
 function openPopup(popup) {            //ф-ция открытия попапа
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', keyEscHandler);   //слушатель события Закрытия попапа по клику на Esc
+  document.addEventListener('keydown', keyEscHandler);  //слушатель события Закрытия попапа по клику на Esc
 };
 
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
@@ -166,8 +179,8 @@ initialCards.forEach(item => {
   renderCards(elements, item)
 });
 
-function keyEnterHandler (evt) { //функция добавления карточки через Enter
-  if(evt.key === 'Enter') {
+function keyEnterHandler(evt) { //функция добавления карточки через Enter
+  if (evt.key === 'Enter') {
     addCard(popupAddLink.value, popupAddPlace.value);
   }
- };
+};
