@@ -24,11 +24,6 @@ const popupAddForm = popupAdd.querySelector('.popup-add__form');
 
 const popup = document.querySelector('.popup');
 
-/* function keyEscHandler (evt) {   //функция закрытия попапа через Esc
-    if(popupEsc.classList.contains('popup_opened') === 'true' && evt.key === 'Escape'){
-     closePopup(popupEsc);
-  }
-};*/
 function keyEscHandler(evt) {  //функция закрытия попапа по клику на 'Escape'
   const popupSome = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
@@ -43,13 +38,6 @@ function closePopupOverlay(evt) {  //функция закрытия попап�
   }
 };
 document.addEventListener('mousedown', closePopupOverlay);//закрытие попапа по клику на оверлэй
-/* 
-// При клике ВНЕ окна - закрываем его
-modalWindow.addEventListener('click', (e) => {
-  if (e.target === modalWindow) {
-	 closeModal(); // Функция вызывается
-  }
-}); */
 
 function closePopup(popup) {           //ф-ция закрытия попапа
   popup.classList.remove('popup_opened');
