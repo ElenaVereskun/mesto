@@ -22,22 +22,21 @@ const popupAddLink = document.querySelector('.popup-add__link');
 const popupAddPlace = document.querySelector('.popup-add__place');
 const popupAddForm = popupAdd.querySelector('.popup-add__form');
 
-const popup = document.querySelector('.popup');
-
 function keyEscHandler(evt) {  //функция закрытия попапа по клику на 'Escape'
-  const popupSome = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
+    const popupSome = document.querySelector('.popup_opened')
     closePopup(popupSome);
   }
 };
 
 function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
-  const popupSome = document.querySelector('.popup_opened');
-  if (evt.target === popupSome) {
-    closePopup(popupSome);
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
   }
 };
-document.addEventListener('mousedown', closePopupOverlay);//закрытие попапа по клику на оверлэй
+profilePopup.addEventListener('mousedown', closePopupOverlay);//закрытие попапа по клику на оверлэй
+popupAdd.addEventListener('mousedown', closePopupOverlay);
+popupPhoto.addEventListener('mousedown', closePopupOverlay);
 
 function closePopup(popup) {           //ф-ция закрытия попапа
   popup.classList.remove('popup_opened');
@@ -50,7 +49,10 @@ function openPopup(popup) {            //ф-ция открытия попапа
 };
 
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
-  openPopup(popupAdd);
+  openPopup(popupAdd);  
+  const formSelector = document.querySelector('.popup__form');
+  const submitButtonSelector = formSelector.querySelector('.popup__save-button');
+  disableButton(submitButtonSelector);
 });
 
 // находим все крестики проекта по универсальному селектору
@@ -112,22 +114,23 @@ const handleLike = () => {             //ф-ция поставить лайк
 };
 
 const template = document.querySelector('#element-template').content;  //выбор template элемента для создания карточки
-const elements = document.querySelector('.elements');
-
-elements.addEventListener('click', (evt) => {   //слушатель события // удаление карточки
-  if (evt.target.classList.contains('element__delete')) {
-    handleDelete(evt)
-  }
-});
+const cardsContainer = document.querySelector('.elements');
 
 function createCard(item) {              //функция создания карточки
   const cloneElement = template.querySelector('.element').cloneNode(true);
   const cardImage = cloneElement.querySelector('.element__link');
   const cardName = cloneElement.querySelector('.element__title');
-  const buttonLike = cloneElement.querySelector('.element__like');
+  const buttonLike = cloneElement.querySelector('.element__like'); //кнопка лайк
+  const buttonDelete = cloneElement.querySelector('.element__delete'); //кнопка корзина
 
   buttonLike.addEventListener('click', () => {   //слушатель события // лайк фото
     buttonLike.classList.toggle('element__like_active');
+  });
+
+  buttonDelete.addEventListener('click', (evt) => {   //слушатель события // удаление карточки
+    if (evt.target.classList.contains('element__delete')) {
+      handleDelete(evt)
+    }
   });
 
   cardImage.addEventListener('click', () => {      //слушатель события //открыть попап 'Большое фото'
@@ -144,7 +147,7 @@ function createCard(item) {              //функция создания ка�
 };
 
 function addCard(card) {       //функция добавления новой карточки
-  elements.prepend(card);
+  cardsContainer.prepend(card);
 }
 
 function handleCardFormSubmit(event) {    //заполнение формы и добавление новой карточки на страницу
@@ -156,19 +159,13 @@ function handleCardFormSubmit(event) {    //заполнение формы и �
   addCard(createCard(obj));
   event.target.reset();       //очистка формы от введённых значений
   closePopup(popupAdd);
-}
-popupAdd.addEventListener('submit', handleCardFormSubmit);
+};
+popupAddForm.addEventListener('submit', handleCardFormSubmit);
 
-const renderCards = (elements, item) => {       // создание карточек
-  elements.append(createCard(item))
+const renderCards = (cardsContainer, item) => {       // создание карточек
+  cardsContainer.append(createCard(item))
 };
 
 initialCards.forEach(item => {
-  renderCards(elements, item)
+  renderCards(cardsContainer, item)
 });
-
-function keyEnterHandler(evt) { //функция добавления карточки через Enter
-  if (evt.key === 'Enter') {
-    addCard(popupAddLink.value, popupAddPlace.value);
-  }
-};

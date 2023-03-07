@@ -1,14 +1,14 @@
 const options = {
   formSelector: '.popup__form',
-  submitSelector: '.popup__save-button',
   inputSelector: '.popup__input',
-  inputErrorClass: 'popup__input_disabled',
+  submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_inactive',
-  errorClass: '.popup__error',
+  inputErrorClass: 'popup__input_error',
   errorClassActive: 'popup__error_active'
 };
-const formPopup = document.querySelector(options.formSelector); //найдена форма
-const input = formPopup.querySelector('input');  //находим инпут в форме
+
+const formSelector = document.querySelector(options.formSelector); //найдена форма
+const inputSelector = formSelector.querySelector(options.inputSelector);  //находим инпут в форме
 
 const hiddenError = (errorInput) => {  //ф-ция скрывает ошибку
   errorInput.textContent = '';
@@ -20,56 +20,68 @@ const showError = (errorInput, message) => {  //ф-ция показывает �
   errorInput.classList.add(options.errorClassActive);
 }
 
-const toggleErrorState = (input, options) => {   //проверка на валидность
-  const isValid = input.validity.valid;
-  const inputForm = input.closest(options.inputSelector);
+const toggleErrorState = (inputSelector, options) => {   //проверка на валидность
+  /* const formSelector = document.querySelector(options.formSelector); //найдена форма
+  const inputSelector = formSelector.querySelector(options.inputSelector); */
+  const isValid = inputSelector.validity.valid;
+  const inputForm = inputSelector.closest(options.inputSelector);
   const errorInput = document.querySelector(`.${inputForm.id}-error`); //показ ошибки под инпутом
 
   if (isValid) {
     hiddenError(errorInput, options.errorClassActive);
   } else {
-    showError(errorInput, input.validationMessage, options.errorClassActive);
+    showError(errorInput, inputSelector.validationMessage, options.errorClassActive);
   }
 };
 
-const enableButton = (popupSaveButton) => { //кнопка активна
-  popupSaveButton.removeAttribute('disabled');
-  popupSaveButton.classList.remove(options.inactiveButtonClass);
+const enableButton = (submitButtonSelector) => { //кнопка активна
+  submitButtonSelector.removeAttribute('disabled');
+  submitButtonSelector.classList.remove(options.inactiveButtonClass);
 };
 
-const disableButton = (popupSaveButton) => { //кнопка не активна
-  popupSaveButton.setAttribute('disabled', 'true');
-  popupSaveButton.classList.add(options.inactiveButtonClass);
+const disableButton = (submitButtonSelector) => { //кнопка не активна
+  submitButtonSelector.setAttribute('disabled', 'true');
+  submitButtonSelector.classList.add(options.inactiveButtonClass);
 };
 
-const togglePopupSaveButton = (inputs, popupSaveButton, options) => {   //активна кнопка, если оба поля валидны
-  const formIsValid = inputs.every(input => input.validity.valid);
+const togglePopupSaveButton = (inputs, submitButtonSelector, options) => {   //активна кнопка, если оба поля валидны
+  /* const formSelector = document.querySelector(options.formSelector); //найдена форма
+  const inputSelector = formSelector.querySelector(options.inputSelector); */
+  const formIsValid = inputs.every(inputSelector => inputSelector.validity.valid);
   if (formIsValid) {
-    enableButton(popupSaveButton, options.inactiveButtonClass);
-    input.classList.remove(options.inputErrorClass); //не активное красное подчёркивание инпута
+    enableButton(submitButtonSelector, options.inactiveButtonClass);
+    inputSelector.classList.remove(options.inputErrorClass); //не активное красное подчёркивание инпута
   } else {
-    disableButton(popupSaveButton, options.inactiveButtonClass);
-    input.classList.add(options.inputErrorClass);  //активно красное подчёркивание инпута
+    disableButton(submitButtonSelector, options.inactiveButtonClass);
+    inputSelector.classList.add(options.inputErrorClass);  //активно красное подчёркивание инпута
   }
 };
 
-const setEventListeners = (formPopup) => {
-  const inputs = Array.from(formPopup.querySelectorAll(options.inputSelector)); //массив всех инпутов
-  const popupSaveButton = formPopup.querySelector(options.submitSelector); //кнопка сохранить
+const setEventListeners = (formSelector) => {
+  /* const formSelector = document.querySelector(options.formSelector); //найдена форма */
+  const inputs = Array.from(formSelector.querySelectorAll(options.inputSelector)); //массив всех инпутов
+  const submitButtonSelector = formSelector.querySelector(options.submitButtonSelector); //кнопка сохранить
 
   inputs.forEach(input => {    // обходим массив импутов
     input.addEventListener('input', () => {
       toggleErrorState(input, options);
-      togglePopupSaveButton(inputs, popupSaveButton, options.inactiveButtonClass);
+      togglePopupSaveButton(inputs, submitButtonSelector, options.inactiveButtonClass);
     });
-    togglePopupSaveButton(inputs, popupSaveButton, options.inactiveButtonClass);
+    togglePopupSaveButton(inputs, submitButtonSelector, options.inactiveButtonClass);
   });
 };
 
 const enableValidation = (options) => {
   const forms = Array.from(document.querySelectorAll(options.formSelector));  //массив элементов, найденных по тегу
-  forms.forEach(formPopup => {
-    setEventListeners(formPopup);
+  forms.forEach(form => {
+    setEventListeners(form);
   });
 };
-enableValidation(options);
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_inactive',
+  inputErrorClass: 'popup__input_error',
+  errorClassActive: 'popup__error_active'
+});

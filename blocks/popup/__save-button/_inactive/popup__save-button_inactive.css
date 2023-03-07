@@ -3,4 +3,6 @@
     color: black;
     border: 1px solid #000000;
     opacity: 0.5;
+    cursor: auto;
+    pointer-events: none;
 }
