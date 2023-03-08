@@ -49,10 +49,10 @@ function openPopup(popup) {            //ф-ция открытия попапа
 };
 
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
-  openPopup(popupAdd);  
-/*const formSelector = document.querySelector('.popup__form');
+  openPopup(popupAdd);
+  const formSelector = popupAdd.querySelector('.popup__form');
   const submitButtonSelector = formSelector.querySelector('.popup__save-button');
-  disableButton(submitButtonSelector); */
+  disableButton(submitButtonSelector);  //кнопка не активна после отправки формы
 });
 
 // находим все крестики проекта по универсальному селектору
@@ -135,9 +135,9 @@ function createCard(item) {              //функция создания ка�
 
   cardImage.addEventListener('click', () => {      //слушатель события //открыть попап 'Большое фото'
     openPopup(popupPhoto);
-    popupPhotoLink.src = cardImage.src;
-    popupPhotoTitle.textContent = cardName.textContent;
-    popupPhotoLink.alt = cardName.textContent;
+    popupPhotoLink.src = item.link;
+    popupPhotoTitle.textContent = item.name;
+    popupPhotoLink.alt = item.name;
   });
 
   cardImage.src = item.link;

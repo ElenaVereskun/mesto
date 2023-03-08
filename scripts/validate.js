@@ -6,22 +6,17 @@ const options = {
   errorClassActive: 'popup__error_active'
 };
 
-const formSelector = document.querySelector(options.formSelector); //найдена форма
-const inputSelector = formSelector.querySelector(options.inputSelector);  //находим инпут в форме
-
-const hiddenError = (errorInput ) => {  //ф-ция скрывает ошибку
+const hiddenError = (errorInput) => {  //ф-ция скрывает ошибку
   errorInput.textContent = '';
   errorInput.classList.remove(options.errorClassActive);
-}
+};
 
 const showError = (errorInput, message) => {  //ф-ция показывает ошибку
   errorInput.textContent = message;
   errorInput.classList.add(options.errorClassActive);
-}
+};
 
-const toggleErrorState = (inputSelector, options) => {   //проверка на валидность
-  /* const formSelector = document.querySelector(options.formSelector); //найдена форма
-  const inputSelector = formSelector.querySelector(options.inputSelector); */
+const toggleErrorState = (inputSelector) => {   //проверка на валидность
   const isValid = inputSelector.validity.valid;
   const errorInput = document.querySelector(`.${inputSelector.id}-error`); //показ ошибки под инпутом
 
@@ -42,35 +37,34 @@ const disableButton = (submitButtonSelector) => { //кнопка не актив
   submitButtonSelector.classList.add(options.inactiveButtonClass);
 };
 
-const togglePopupSaveButton = (inputs, submitButtonSelector) => {   //активна кнопка, если оба поля валидны
-  /* const formSelector = document.querySelector(options.formSelector); //найдена форма
-  const inputSelector = formSelector.querySelector(options.inputSelector); */
+const togglePopupSaveButton = (inputs, submitButtonSelector, options) => {   //активна кнопка, если оба поля валидны
+  const formSelector = document.querySelector(options.formSelector); //найдена форма
+  const inputSelector = formSelector.querySelector(options.inputSelector);
   const formIsValid = inputs.every(inputSelector => inputSelector.validity.valid);
-  if (formIsValid) {    
+  if (formIsValid) {
     enableButton(submitButtonSelector);
   } else {
     disableButton(submitButtonSelector);
   }
 };
 
-const setEventListeners = (formSelector) => {
-  /* const formSelector = document.querySelector(options.formSelector); */ //найдена форма */
+const setEventListeners = (formSelector, options) => {
   const inputs = Array.from(formSelector.querySelectorAll(options.inputSelector)); //массив всех инпутов
   const submitButtonSelector = formSelector.querySelector(options.submitButtonSelector); //кнопка сохранить
 
   inputs.forEach(input => {    // обходим массив импутов
     input.addEventListener('input', () => {
-      toggleErrorState(input, options);
-      togglePopupSaveButton(inputs, submitButtonSelector);
+      toggleErrorState(input);
+      togglePopupSaveButton(inputs, submitButtonSelector, options);
     });
-    togglePopupSaveButton(inputs, submitButtonSelector);
+    togglePopupSaveButton(inputs, submitButtonSelector, options);
   });
 };
 
 const enableValidation = (options) => {
   const forms = Array.from(document.querySelectorAll(options.formSelector));  //массив элементов, найденных по тегу
   forms.forEach(form => {
-    setEventListeners(form);
+    setEventListeners(form, options);
   });
 };
 enableValidation({
