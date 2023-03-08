@@ -50,9 +50,9 @@ function openPopup(popup) {            //ф-ция открытия попапа
 
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
   openPopup(popupAdd);  
-  const formSelector = document.querySelector('.popup__form');
+/*const formSelector = document.querySelector('.popup__form');
   const submitButtonSelector = formSelector.querySelector('.popup__save-button');
-  disableButton(submitButtonSelector);
+  disableButton(submitButtonSelector); */
 });
 
 // находим все крестики проекта по универсальному селектору
