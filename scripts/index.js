@@ -34,9 +34,6 @@ function closePopupOverlay(evt) {  //функция закрытия попап�
     closePopup(evt.target);
   }
 };
-profilePopup.addEventListener('mousedown', closePopupOverlay);//закрытие попапа по клику на оверлэй
-popupAdd.addEventListener('mousedown', closePopupOverlay);
-popupPhoto.addEventListener('mousedown', closePopupOverlay);
 
 function closePopup(popup) {           //ф-ция закрытия попапа
   popup.classList.remove('popup_opened');
@@ -51,8 +48,8 @@ function openPopup(popup) {            //ф-ция открытия попапа
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
   openPopup(popupAdd);
   const formSelector = popupAdd.querySelector('.popup__form');
-  const submitButtonSelector = formSelector.querySelector('.popup__save-button');
-  disableButton(submitButtonSelector);  //кнопка не активна после отправки формы
+  const submitButton = formSelector.querySelector('.popup__save-button');
+  disableButton(submitButton);  //кнопка не активна после отправки формы
 });
 
 // находим все крестики проекта по универсальному селектору
@@ -61,6 +58,7 @@ const closeButtons = document.querySelectorAll('.popup__close-button');
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');  // находим 1 раз ближайший к крестику попап 
   button.addEventListener('click', () => closePopup(popup));  // устанавливаем обработчик закрытия на крестик
+  popup.addEventListener('mousedown', closePopupOverlay);  //закрытие попапа по клику на оверлэй
 });
 
 function handleProfileFormSubmit(evt) {      //функция заполнения формы 
@@ -127,12 +125,8 @@ function createCard(item) {              //функция создания ка�
     buttonLike.classList.toggle('element__like_active');
   });
 
-  buttonDelete.addEventListener('click', (evt) => {   //слушатель события // удаление карточки
-    if (evt.target.classList.contains('element__delete')) {
-      handleDelete(evt)
-    }
-  });
-
+  buttonDelete.addEventListener('click', handleDelete);   //слушатель события // удаление карточки
+  
   cardImage.addEventListener('click', () => {      //слушатель события //открыть попап 'Большое фото'
     openPopup(popupPhoto);
     popupPhotoLink.src = item.link;
