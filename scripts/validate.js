@@ -1,10 +1,10 @@
-const hiddenError = (formSelector, errorInput, options) => {  //ф-ция скрывает ошибку
+const hiddenError = (inputSelector, errorInput, options) => {  //ф-ция скрывает ошибку
   errorInput.textContent = '';
   errorInput.classList.remove(options.errorClassActive);
   inputSelector.classList.remove(options.inputErrorClass);
 };
 
-const showError = (formSelector, errorInput, message, options) => {  //ф-ция показывает ошибку
+const showError = (inputSelector, errorInput, message, options) => {  //ф-ция показывает ошибку
   errorInput.textContent = message;
   errorInput.classList.add(options.errorClassActive);
   inputSelector.classList.add(options.inputErrorClass);
@@ -13,17 +13,11 @@ const showError = (formSelector, errorInput, message, options) => {  //ф-ция
 const toggleErrorState = (inputSelector, formSelector, options) => {   //проверка на валидность
   const isValid = inputSelector.validity.valid;
   const errorInput = formSelector.querySelector(`.${inputSelector.id}-error`); //показ ошибки под инпутом
-
   if (isValid) {
-    hiddenError(formSelector, errorInput, options);
+    hiddenError(inputSelector, errorInput, options);
   } else {
-    showError(formSelector, errorInput, inputSelector.validationMessage);
+    showError(inputSelector, errorInput, inputSelector.validationMessage, options);
   }
-};
-
-const enableButton = (submitButton, options) => { //кнопка активна
-  submitButton.removeAttribute('disabled');
-  submitButton.classList.remove(options.inactiveButtonClass);
 };
 
 const disableButton = (submitButton, options) => { //кнопка не активна
@@ -31,6 +25,10 @@ const disableButton = (submitButton, options) => { //кнопка не акти�
   submitButton.classList.add(options.inactiveButtonClass);
 };
 
+const enableButton = (submitButton, options) => { //кнопка активна
+  submitButton.removeAttribute('disabled');
+  submitButton.classList.remove(options.inactiveButtonClass);
+};
 const togglePopupAddButton = (inputs, submitButton, options) => {   //активна кнопка, если оба поля валидны
   const formIsValid = inputs.every(inputSelector => inputSelector.validity.valid);
   if (formIsValid) {
@@ -43,7 +41,6 @@ const togglePopupAddButton = (inputs, submitButton, options) => {   //актив
 const setEventListeners = (formSelector, options) => {
   const inputs = Array.from(formSelector.querySelectorAll(options.inputSelector)); //массив всех инпутов
   const submitButton = formSelector.querySelector(options.submitButtonSelector); //кнопка сохранить
-
   inputs.forEach(input => {    // обходим массив импутов
     input.addEventListener('input', () => {
       toggleErrorState(input, formSelector, options);
@@ -59,11 +56,12 @@ const enableValidation = (options) => {
     setEventListeners(form, options);
   });
 };
+
 enableValidation({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
-  submitButton: '.popup__save-button',
+  submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_inactive',
   errorClassActive: 'popup__error_active',
-  inputErrorClass: 'popup__input_type_error'
+  inputErrorClass: 'popup__input_type_error',
 });

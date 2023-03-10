@@ -49,7 +49,8 @@ buttonAdd.addEventListener('click', () => {    //слушатель событи
   openPopup(popupAdd);
   const formSelector = popupAdd.querySelector('.popup__form');
   const submitButton = formSelector.querySelector('.popup__save-button');
-  disableButton(submitButton);  //кнопка не активна после отправки формы
+  const options = {inactiveButtonClass: 'popup__save-button_inactive'};
+  disableButton(submitButton, options);  //кнопка не активна после отправки формы
 });
 
 // находим все крестики проекта по универсальному селектору
