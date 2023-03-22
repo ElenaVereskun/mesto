@@ -1,4 +1,4 @@
-import { openPopup } from './index.js';
+import { openPopup, closePopup } from './index.js';
 const initialCards = [    // исходный массив с ссылками на фото и названиями мест
   {
     name: 'Архыз',
@@ -37,6 +37,10 @@ export default class Card {
       .content
       .querySelector('.element')
       .cloneNode(true);
+    return cardElement;
+  };
+  generateCard() {
+    this._element = this._getTemplate();
 
     this._cardsContainer = document.querySelector('.elements');
     this._profile = document.querySelector('.profile');   //выбор элементов для попапа"редактировать профиль"
@@ -60,16 +64,18 @@ export default class Card {
     this._popupAdd = document.querySelector('.popup-add');             //аргументы для попапа,
     this._buttonAdd = document.querySelector('.profile__add-button'); //который добавляет фото
     this._popupAddForm = this._popupAdd.querySelector('.popup-add__form');
-    // вернём DOM-элемент карточки
+    this._popupAddLink = this._popupAdd.querySelector('.popup-add__link');
+    this._popupAddPlace = this._popupAdd.querySelector('.popup-add__place');
 
-    return cardElement;
-  };
-  generateCard() {
-    this._element = this._getTemplate();
     this._buttonLikeListener();  //вызов метода //лайк фото
     this._buttonDeleteListener();  //вызов метода //удаление карточки
     this._openPopupPhotoListener();  //вызов метода //открыть попап 'Большое фото'
-    this._profileEditButtonListener();//вызов метода Изменить данные////////////////////////////////////
+    this._profileEditButtonListener();//вызов метода Изменить данные
+    this._buttonAddListener();        //вызов метода открыть попап Новая карточка
+
+    this._popupAddCardFormSubmit();  //добавить новую карточку
+    this._profilePopupFormSubmit();  //сохранить изменения в редактировании данных
+
 
     this._element.querySelector('.element__link').src = this._link;
     this._element.querySelector('.element__title').textContent = this._name;
@@ -90,15 +96,15 @@ export default class Card {
   }
   _buttonAddListener() {
     this._buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
-      this._popupAddListener();
+      this._openPopupAdd();
     });
   }
-  _popupAddListener() {
+  _openPopupAdd() {
     openPopup(this._popupAdd);
-    const formSelector = this._popupAdd.querySelector('.popup__form');
-    const submitButton = formSelector.querySelector('.popup__save-button');
-    const options = { inactiveButtonClass: 'popup__save-button_inactive' };
-    disableButton(submitButton, options);  //кнопка не активна после отправки формы
+    /*     const formSelector = this._popupAdd.querySelector('.popup__form');
+        const submitButton = formSelector.querySelector('.popup__save-button');
+        const options = { inactiveButtonClass: 'popup__save-button_inactive' };
+        disableButton(submitButton, options);  //кнопка не активна после отправки формы */
   }
 
   _buttonDeleteListener() {     // слушатель события удалить карточку
@@ -106,10 +112,9 @@ export default class Card {
       this._handleDelete();
     });
   }
-  _handleDelete(evt) {
-    evt.target.closest('.element').remove();    //метод удалить карточку
+  _handleDelete() {    //метод удалить карточку
+    this._buttonDelete.closest('.element').remove();
   }
-
   _buttonLikeListener() {     // слушатель события поставить лайк
     this._buttonLike.addEventListener('click', () => {
       this._handleLike();
@@ -125,24 +130,45 @@ export default class Card {
   }
   _openPopupPhoto() {  // открытие попапа Большое фото
     openPopup(this._popupPhoto);
-    this._popupPhotoLink.src = data.link;
-    this._popupPhotoTitle.textContent = data.name;
-    this._popupPhotoLink.alt = data.name;
+    this._popupPhotoLink.src = this._link;
+    this._popupPhotoTitle.textContent = this._name;
+    this._popupPhotoLink.alt = this._name;
   }
-}
-//переберём весь исходный массив
-initialCards.forEach((item) => {
-  const card = new Card(item, '#element-template'); // передаём объект аргументом
-  /* document.querySelector('#element-template').append(card.generateCard()); */
-  const cardElement = card.generateCard();
-  document.querySelector('#element-template').append(cardElement);
-});
-/* initialCards.forEach((data) => {
-  // Создадим экземпляр карточки
-  const card = new Card(data, templateSelector);
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();
+  _popupAddCardFormSubmit() {
+    this._popupAddForm.addEventListener('submit', () => {
+      this._handleCardFormSubmit();
+    });
+  }
+  _handleCardFormSubmit(event) {    //заполнение формы
+    event.preventDefault();
+    const obj = {
+      name: this._popupAddPlace.value,
+      link: this._popupAddLink.value
+    }
+/*     this._cardsContainer.prepend(this.generateCard(obj));
+       event.target.reset();       //очистка формы от введённых значений
+       closePopup(popupAdd); */
+  };
+  _profilePopupFormSubmit() {
+    this._profilePopupForm.addEventListener('submit', () => {
+      this._handleProfileFormSubmit;
+    });
+  }
+  _handleProfileFormSubmit(evt) {      //функция заполнения формы 
+    evt.preventDefault();             //попапа редактирования профиля    
 
-  // Добавляем в DOM
-  document.body.append(cardElement);
-});  */
+    this._profileName.textContent = this._profilePopupName.value;
+    this._profileJob.textContent = this._profilePopupJob.value;
+
+    closePopup(this._profilePopup)
+  };
+}
+//создание карточек
+initialCards.forEach((item) => {
+  const card = new Card(item, '#element-template');
+  const cardElement = card.generateCard();
+  document.querySelector('.elements').append(cardElement);
+});
+const newCard = new Card(obj,'#element-template');
+const cardElement = newCard.generateCard();
+document.querySelector('.elements').append(cardElement);
