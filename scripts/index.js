@@ -1,5 +1,6 @@
 import Card from './Card.js';
-/* import FormValidator from './FormValidator'; */
+import FormValidator from './FormValidator.js';
+
 const profilePopup = document.querySelector('.profile-popup');
 const profileEditButton = document.querySelector('.profile__edit-button');
 
@@ -65,10 +66,12 @@ function openPopup(popup) {            //ф-ция открытия попапа
 };
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
   openPopup(popupAdd);
-  const formSelector = popupAdd.querySelector('.popup__form');
+  const formValidatorNew = new FormValidator();
+  formValidatorNew.enableValidation();
+/*   const formSelector = popupAdd.querySelector('.popup__form');
   const submitButton = formSelector.querySelector('.popup__save-button');
   const options = { inactiveButtonClass: 'popup__save-button_inactive' };
-  disableButton(submitButton, options);  //кнопка не активна после отправки формы
+  disableButton(submitButton, options);  //кнопка не активна после отправки формы */
 });
 // находим все крестики проекта по универсальному селектору
 const closeButtons = document.querySelectorAll('.popup__close-button');
@@ -94,10 +97,6 @@ profileEditButton.addEventListener('click', () => {      //слушатель с
   profilePopupJob.value = profileJob.textContent;
 });
 
-/* function addCard(card) {       //функция добавления новой карточки
-  cardsContainer.prepend(card);
-} */
-
 function handleCardFormSubmit(event) {    //заполнение формы и добавление новой карточки на страницу
   event.preventDefault();
      const obj = {
@@ -112,11 +111,32 @@ function handleCardFormSubmit(event) {    //заполнение формы и �
   closePopup(popupAdd);
 };
 popupAddForm.addEventListener('submit', handleCardFormSubmit);
+
 //создание карточек
 initialCards.forEach((item) => {
   const card = new Card(item, '#element-template');
   const cardElement = card.generateCard();
   document.querySelector('.elements').append(cardElement);
 });
+//создание класса валидации для формы добавления новой карточки
+const formValidatorPopupAdd = new FormValidator({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_inactive',
+  errorClassActive: 'popup__error_active',
+  inputErrorClass: 'popup__input_type_error',
+}, popupAddForm);
+formValidatorPopupAdd.enableValidation();
+//создание класса валидации для формы редактирования профиля
+const formValidatorPopupProfile = new FormValidator({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_inactive',
+  errorClassActive: 'popup__error_active',
+  inputErrorClass: 'popup__input_type_error',
+}, profilePopupForm);
+formValidatorPopupProfile.enableValidation();
 
 export { openPopup };
