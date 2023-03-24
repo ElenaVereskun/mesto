@@ -1,13 +1,13 @@
 
 export default class FormValidator {
   constructor(options, form) {
-    this._formSelector = options.formSelector;
     this._inputSelector = options.inputSelector;
     this._submitButtonSelector = options.submitButtonSelector;
     this._inactiveButtonClass = options.inactiveButtonClass;
     this._errorClassActive = options.errorClassActive,
       this._inputErrorClass = options.inputErrorClass;
     this._form = form;
+    console.log(options.inputSelector);
   }
   _hiddenError = () => {  //ф-ция скрывает ошибку
     this._errorInput.textContent = '';
@@ -19,9 +19,7 @@ export default class FormValidator {
     this._errorInput.classList.add(this._options.errorClassActive);
     this._inputSelector.classList.add(this._options.inputErrorClass);
   };
-
   _toggleErrorState = () => {   //проверка на валидность
-    console.log(this._form);
     this._errorInput = this._form.querySelector(`.${this._inputSelector.id}-error`); //показ ошибки под инпутом
     if (this._inputSelector.validity.valid) {
       this._hiddenError();
@@ -33,7 +31,6 @@ export default class FormValidator {
     this._submitButton.setAttribute('disabled', 'true');
     this._submitButton.classList.add(this._options.inactiveButtonClass);
   };
-
   _enableButton = () => { //кнопка активна
     this._submitButton.removeAttribute('disabled');
     this._submitButton.classList.remove(this._options.inactiveButtonClass);
@@ -44,7 +41,6 @@ export default class FormValidator {
     } else {
       this._enableButton();
     }
-    console.log(this._inputSelector.validity.valid);
   };
   _setEventListeners = () => {
     this._inputs = Array.from(this._form.querySelectorAll(this._inputSelector)); //массив всех инпутов

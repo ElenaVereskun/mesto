@@ -120,7 +120,6 @@ initialCards.forEach((item) => {
 });
 //создание класса валидации для формы добавления новой карточки
 const formValidatorPopupAdd = new FormValidator({
-  formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_inactive',
@@ -130,7 +129,6 @@ const formValidatorPopupAdd = new FormValidator({
 formValidatorPopupAdd.enableValidation();
 //создание класса валидации для формы редактирования профиля
 const formValidatorPopupProfile = new FormValidator({
-  formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_inactive',
