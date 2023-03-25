@@ -12,11 +12,26 @@ const profile = document.querySelector('.profile');   //выбор элемен�
 const profileName = profile.querySelector('.profile__name');
 const profileJob = profile.querySelector('.profile__job');
 
+const cardsContainer = document.querySelector('.elements');
 const popupAdd = document.querySelector('.popup-add');             //аргументы для попапа,
 const buttonAdd = document.querySelector('.profile__add-button'); //который добавляет фото
 const popupAddLink = document.querySelector('.popup-add__link');
 const popupAddPlace = document.querySelector('.popup-add__place');
 const popupAddForm = popupAdd.querySelector('.popup-add__form');
+
+const options = ({
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_inactive',
+  errorClassActive: 'popup__error_active',
+  inputErrorClass: 'popup__input_type_error',
+});
+
+//создание класса валидации для формы добавления новой карточки
+const formValidatorPopupAdd = new FormValidator(options, popupAddForm);
+//создание класса валидации для формы редактирования профиля
+const formValidatorPopupProfile = new FormValidator(options, profilePopupForm);
+formValidatorPopupProfile.enableValidation();
 
 const initialCards = [    // исходный массив с ссылками на фото и названиями мест
   {
@@ -66,12 +81,7 @@ function openPopup(popup) {            //ф-ция открытия попапа
 };
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
   openPopup(popupAdd);
-  const formValidatorNew = new FormValidator();
-  formValidatorNew.enableValidation();
-/*   const formSelector = popupAdd.querySelector('.popup__form');
-  const submitButton = formSelector.querySelector('.popup__save-button');
-  const options = { inactiveButtonClass: 'popup__save-button_inactive' };
-  disableButton(submitButton, options);  //кнопка не активна после отправки формы */
+  formValidatorPopupAdd.enableValidation();
 });
 // находим все крестики проекта по универсальному селектору
 const closeButtons = document.querySelectorAll('.popup__close-button');
@@ -105,7 +115,7 @@ function handleCardFormSubmit(event) {    //заполнение формы и �
     }
     const cardNew = new Card(obj, '#element-template');
     const cardElement = cardNew.generateCard();
-    document.querySelector('.elements').prepend(cardElement);
+    cardsContainer.prepend(cardElement);
 
   event.target.reset();       //очистка формы от введённых значений
   closePopup(popupAdd);
@@ -116,25 +126,7 @@ popupAddForm.addEventListener('submit', handleCardFormSubmit);
 initialCards.forEach((item) => {
   const card = new Card(item, '#element-template');
   const cardElement = card.generateCard();
-  document.querySelector('.elements').append(cardElement);
+  cardsContainer.append(cardElement);
 });
-//создание класса валидации для формы добавления новой карточки
-const formValidatorPopupAdd = new FormValidator({
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  errorClassActive: 'popup__error_active',
-  inputErrorClass: 'popup__input_type_error',
-}, popupAddForm);
-formValidatorPopupAdd.enableValidation();
-//создание класса валидации для формы редактирования профиля
-const formValidatorPopupProfile = new FormValidator({
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  errorClassActive: 'popup__error_active',
-  inputErrorClass: 'popup__input_type_error',
-}, profilePopupForm);
-formValidatorPopupProfile.enableValidation();
 
 export { openPopup };
