@@ -15,7 +15,6 @@ export default class Card {
   };
   generateCard() {
     this._element = this._getTemplate();
-
     this._element.querySelector('.element__link').src = this._link;
     this._element.querySelector('.element__title').textContent = this._name;
     this._element.querySelector('.element__link').alt = this._name;
@@ -24,8 +23,6 @@ export default class Card {
     return this._element;
   }
   _setEventListener() {
-    this._cardsContainer = document.querySelector('.elements');
-
     this._buttonLike = this._element.querySelector('.element__like'); //кнопка лайк
     this._buttonDelete = this._element.querySelector('.element__delete'); //кнопка корзина
     //выбор элементов для попапа"большое фото"
@@ -43,7 +40,8 @@ export default class Card {
     });
   }
   _handleDelete() {    //метод удалить карточку
-    this._buttonDelete.closest('.element').remove();
+    this._element.remove();
+    this._element = null;
   }
   _buttonLikeListener() {     // слушатель события поставить лайк
     this._buttonLike.addEventListener('click', () => {
