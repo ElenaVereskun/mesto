@@ -31,7 +31,6 @@ export default class FormValidator {
     this._submitButton.classList.remove(this._options.inactiveButtonClass);
   };
   _togglePopupButton() {   //активна кнопка, если оба поля валидны  
-    this._inputs = Array.from(this._form.querySelectorAll(this._options.inputSelector)); //массив всех инпутов
     this._formIsValid = this._inputs.every(input => input.validity.valid);
     if (this._formIsValid) {
       this._enableButton();

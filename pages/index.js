@@ -1,5 +1,6 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 
 const profilePopup = document.querySelector('.profile-popup');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -61,46 +62,46 @@ const initialCards = [    // исходный массив с ссылками �
   }
 ];
 
-function keyEscHandler(evt) {  //функция закрытия попапа по клику на 'Escape'
+/* function keyEscHandler(evt) {  //функция закрытия попапа по клику на 'Escape'
   if (evt.key === 'Escape') {
     const popupSome = document.querySelector('.popup_opened')
     closePopup(popupSome);
   }
-};
-function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
+}; */
+/* function closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
   if (evt.target.classList.contains('popup')) {
     closePopup(evt.target);
   }
-};
-function closePopup(popup) {           //ф-ция закрытия попапа
+}; */
+/* function closePopup(popup) {           //ф-ция закрытия попапа
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', keyEscHandler); //удаление слушателя события Закрытия попапа по клику на Esc
-};
-function openPopup(popup) {            //ф-ция открытия попапа
+}; */
+/* function openPopup(popup) {            //ф-ция открытия попапа
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', keyEscHandler);  //слушатель события Закрытия попапа по клику на Esc
-};
+}; */
 buttonAdd.addEventListener('click', () => {    //слушатель события //открыть попап 'Новая карточка'
   openPopup(popupAdd);
   formValidatorPopupAdd.resetValidation();
 });
 // находим все крестики проекта по универсальному селектору
-const closeButtons = document.querySelectorAll('.popup__close-button');
+/* const closeButtons = document.querySelectorAll('.popup__close-button');
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');  // находим 1 раз ближайший к крестику попап 
   button.addEventListener('click', () => closePopup(popup));  // устанавливаем обработчик закрытия на крестик
   popup.addEventListener('mousedown', closePopupOverlay);  //закрытие попапа по клику на оверлэй
-});
+}); */
 
-function handleProfileFormSubmit(evt) {      //функция заполнения формы 
+/* function handleProfileFormSubmit(evt) {      //функция заполнения формы 
   evt.preventDefault();             //попапа редактирования профиля    
 
   profileName.textContent = profilePopupName.value;
   profileJob.textContent = profilePopupJob.value;
 
   closePopup(profilePopup)
-};
-profilePopupForm.addEventListener('submit', handleProfileFormSubmit);
+}; */
+/* profilePopupForm.addEventListener('submit', handleProfileFormSubmit); */
 
 profileEditButton.addEventListener('click', () => {      //слушатель события //Добавить информацию 
   openPopup(profilePopup);
@@ -120,12 +121,12 @@ function createCard() {        //функция создания карточк�
 function addCard(card) {       //функция добавления новой карточки
   cardsContainer.prepend(card);
 };
-popupAddForm.addEventListener('submit', (event) => {//слушатель события Добавить карточку
+/* popupAddForm.addEventListener('submit', (event) => {//слушатель события Добавить карточку
   event.preventDefault();
   addCard(createCard());
   event.target.reset();      //очистка формы от введённых значений
   closePopup(popupAdd);
-});
+}); */
 //создание карточек
 initialCards.forEach((item) => {
   const card = new Card(item, '#element-template');
@@ -134,3 +135,23 @@ initialCards.forEach((item) => {
 });
 
 export { openPopup };
+
+//Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
+const PopupWithProfileForm = new PopupWithForm(
+  profilePopup,
+  handleFormSubmit = (evt) => {
+      evt.preventDefault();             //попап редактирования профиля    
+      profileName.textContent = profilePopupName.value;
+      profileJob.textContent = profilePopupJob.value;
+      closePopup(profilePopup)
+  }
+);
+const PopupWithAddForm = new PopupWithForm(
+  popupAdd,
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    addCard(createCard());
+    event.target.reset();      //очистка формы от введённых значений
+    closePopup(popupAdd);
+  }
+)
