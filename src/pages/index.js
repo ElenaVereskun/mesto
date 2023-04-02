@@ -1,6 +1,11 @@
+import './index.css';
 import Card from '../components/Card.js';
-import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js';
+import Popup from '../components/Popup.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import FormValidator from '../components/FormValidator.js';
 
 const profilePopup = document.querySelector('.profile-popup');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -129,13 +134,25 @@ function addCard(card) {       //функция добавления новой 
 }); */
 //создание карточек
 initialCards.forEach((item) => {
-  const card = new Card(item, '#element-template');
+  const card = new Card(
+    item, 
+    '#element-template',
+    handleCardClick = () => {
+      this._element.querySelector('.element__link').addEventListener('click', () => {
+        Popup.open(popupPhoto);
+        popupPhotoLink.src = this._link;
+        popupPhotoTitle.textContent = this._name;
+        popupPhotoLink.alt = this._name;
+      });
+    });
   const cardElement = card.generateCard();
   cardsContainer.append(cardElement);
 });
-
-export { openPopup };
-
+Section.renderItems();
+Popup.setEventListeners();
+PopupWithForm.generate();
+PopupWithImage.generate();
+UserInfo.getUserInfo();
 //Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
 const PopupWithProfileForm = new PopupWithForm(
   profilePopup,
@@ -143,15 +160,18 @@ const PopupWithProfileForm = new PopupWithForm(
       evt.preventDefault();             //попап редактирования профиля    
       profileName.textContent = profilePopupName.value;
       profileJob.textContent = profilePopupJob.value;
-      closePopup(profilePopup)
+      Popup.close(profilePopup);
   }
 );
+PopupWithProfileForm.generate();
+
 const PopupWithAddForm = new PopupWithForm(
   popupAdd,
   handleFormSubmit = (event) => {
     event.preventDefault();
     addCard(createCard());
     event.target.reset();      //очистка формы от введённых значений
-    closePopup(popupAdd);
+    Popup.close(popupAdd);
   }
-)
+);
+PopupWithAddForm.generate();

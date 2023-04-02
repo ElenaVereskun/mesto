@@ -1,9 +1,9 @@
-import { openPopup } from './index.js';
 export default class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick();//функция должна открывать попап с картинкой при клике на карточку.
   }
   _getTemplate() {
     const cardElement = document
@@ -51,15 +51,15 @@ export default class Card {
   _handleLike() {             //метод поставить лайк
     this._buttonLike.classList.toggle('element__like_active');
   };
-  _openPopupPhotoListener() {  // стушатель попапа Большое фото
+/*   _openPopupPhotoListener() {  // стушатель попапа Большое фото
     this._element.querySelector('.element__link').addEventListener('click', () => {
       this._openPopupPhoto();
     });
   }
   _openPopupPhoto() {  // открытие попапа Большое фото
-    openPopup(this._popupPhoto);
+    Popup.open(this._popupPhoto);
     this._popupPhotoLink.src = this._link;
     this._popupPhotoTitle.textContent = this._name;
     this._popupPhotoLink.alt = this._name;
-  }
+  } */
 }
