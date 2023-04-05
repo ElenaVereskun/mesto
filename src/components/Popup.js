@@ -1,34 +1,37 @@
-export default class Popup {//который отвечает за открытие и закрытие попапа
-    constructor(popup) {//popup -- селектор попапа.
-        this._popup = popup
+export default class Popup {
+    constructor(popupSelector) {
+        this._popupSelector = document.querySelector(popupSelector);
     }
-    open() {        //метод открытия попапа
-        this._popup.classList.add('popup_opened');         
+    open() {
+        this._popup.classList.add('popup_opened');
+        document.addEventListener('keydown', () => {
+            this._handleEscClose();
+        });
     }
-    close() {        //метод зактырия попапа
+    close() {
         this._popup.classList.remove('popup_opened');
+        document.removeEventListener('keydown', () => {
+            this._handleEscClose();
+        });
     }
-    _handleEscClose() {//содержит логику закрытия попапа клавишей Esc.
-        document.addEventListener('keydown', this._keyEscHandler);  //слушатель события Закрытия попапа по клику на Esc
-    }
-    _keyEscHandler(evt){
+    _handleEscClose(evt) {
         if (evt.key === 'Escape') {
             const popupSome = document.querySelector('.popup_opened')
             this._closePopup(popupSome);
-          }
+        }
     }
-    _closePopupOverlay(evt) {  //функция закрытия попапа по клику на оверлэй
+    _closePopupOverlay(evt) {
         if (evt.target.classList.contains('popup')) {
             this._closePopup(evt.target);
         }
-      };
-    setEventListeners() {//который добавляет слушатель клика иконке закрытия попапа.
-        //Модальное окно также закрывается при клике на затемнённую область вокруг формы.
+    };
+    setEventListeners() {
         const closeButtons = document.querySelectorAll('.popup__close-button');
         closeButtons.forEach((button) => {
-          const popup = button.closest('.popup');  // находим 1 раз ближайший к крестику попап 
-          button.addEventListener('click', () => this._closePopup(popup));  // устанавливаем обработчик закрытия на крестик
-          popup.addEventListener('mousedown', closePopupOverlay);  //закрытие попапа по клику на оверлэй
+            const popup = button.closest('.popup');
+            button.addEventListener('click', () => this._closePopup(popup));
+            popup.addEventListener('mousedown', closePopupOverlay);
         });
+        this._closePopupOverlay(evt);
     }
 }

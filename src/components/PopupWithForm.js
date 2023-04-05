@@ -1,3 +1,4 @@
+import Popup from "./Popup";
 export default class PopupWithForm extends Popup {
     constructor(popup, handleFormSubmit) {
         this._popup = super(popup);
@@ -33,7 +34,6 @@ export default class PopupWithForm extends Popup {
     generate() {
         this._element = this._getElement(); // создаём элемент
         this._setEventListeners(); // добавляем обработчики
-
         return this._element; // возвращаем наружу
     }
 
