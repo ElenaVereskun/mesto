@@ -3,9 +3,7 @@ export default class UserInfo {
         this._name = name;
         this._job = job;
     }
-    getUserInfo() {//возвращает объект с данными пользователя. 
-        //Этот метод пригодится когда данные пользователя нужно 
-        //будет подставить в форму при открытии.
+    getUserInfo() {
         this._profileName = document.querySelector('.profile__name').textContent;
         this._profileJob = document.querySelector('.profile__job').textContent;
     }
