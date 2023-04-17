@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, templateSelector , handleCardClick) {
+  constructor(data, templateSelector, handleCardClick) {
     this.name = data.name;
     this.link = data.link;
     this._templateSelector = templateSelector;
@@ -24,13 +24,13 @@ export default class Card {
   _setEventListener() {
     this._buttonLike = this._element.querySelector('.element__like');
     this._buttonDelete = this._element.querySelector('.element__delete');
-    //выбор элементов для попапа"большое фото"
-    /*     this._popupPhoto = document.querySelector('.popup-photo');
-        this._popupPhotoLink = this._popupPhoto.querySelector('.popup-photo__link');
-        this._popupPhotoTitle = this._popupPhoto.querySelector('.popup-photo__title'); */
 
     this._buttonLikeListener();
     this._buttonDeleteListener();
+
+    this._element.querySelector('.element__link').addEventListener('click', () => {
+      this._handleCardClick(this.name, this.link);
+    });
   }
   _buttonDeleteListener() {
     this._buttonDelete.addEventListener('click', () => {
@@ -49,15 +49,4 @@ export default class Card {
   _handleLike() {
     this._buttonLike.classList.toggle('element__like_active');
   };
-  /*   _openPopupPhotoListener() {  // стушатель попапа Большое фото
-      this._element.querySelector('.element__link').addEventListener('click', () => {
-        this._openPopupPhoto();
-      });
-    }
-    _openPopupPhoto() {  // открытие попапа Большое фото
-      Popup.open(this._popupPhoto);
-      this._popupPhotoLink.src = this._link;
-      this._popupPhotoTitle.textContent = this._name;
-      this._popupPhotoLink.alt = this._name;
-    } */
 }
