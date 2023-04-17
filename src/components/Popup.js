@@ -13,19 +13,19 @@ export default class Popup {
     _handleEscClose(event) {
         if (event.key === 'Escape') {
             const popupSome = document.querySelector('.popup_opened')
-            this._close(popupSome);
+            this.close(popupSome);
         }
     }
     _closePopupOverlay(event) {
         if (event.target.classList.contains('popup')) {
-            this._close(event.target);
+            this.close(event.target);
         }
     };
     setEventListeners() {
         const closeButtons = document.querySelectorAll('.popup__close-button');
         closeButtons.forEach((button) => {
             const popup = button.closest('.popup');
-            button.addEventListener('click', (popup) => this._close(popup));
+            button.addEventListener('click', (popup) => this.close(popup));
             popup.addEventListener('mousedown', (event) => this._closePopupOverlay(event));
         });
     }

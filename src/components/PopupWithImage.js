@@ -7,7 +7,12 @@ export default class PopupWithImage extends Popup {
     }
     open() {
         super.open();
-        document.querySelector('.element__link').src = this._link;
-        document.querySelector('.element__title').textContent = this._name;
+        
+        this._element.querySelector('.element__link').addEventListener('click', () => {
+            this._popupSelector.querySelector('.element__link').src = this._link;
+            this._popupSelector.querySelector('.element__title').textContent = this._name;
+          });
+
+
     }
 }

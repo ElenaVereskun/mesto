@@ -11,15 +11,15 @@ const profilePopup = document.querySelector('.profile-popup');
 const profileEditButton = document.querySelector('.profile__edit-button');
 
 const profilePopupForm = document.querySelector('.profile-popup__form');
-const profilePopupName = profilePopupForm.querySelector('.profile-popup__user_info_name');
-const profilePopupJob = profilePopupForm.querySelector('.profile-popup__user_info_job');
+/* const profilePopupName = profilePopupForm.querySelector('.profile-popup__user_info_name');
+const profilePopupJob = profilePopupForm.querySelector('.profile-popup__user_info_job'); */
 
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
 const profileJob = profile.querySelector('.profile__job');
 
 const cardsContainer = document.querySelector('.elements');
-const popupAdd = document.querySelector('.popup-add');
+const popupAddSelector = document.querySelector('.popup-add');
 const buttonAdd = document.querySelector('.profile__add-button');
 const popupAddForm = document.querySelector('.popup-add__form');
 const popupAddLink = popupAddForm.querySelector('.popup-add__link');
@@ -72,7 +72,7 @@ const initialCards = [    // исходный массив с ссылками �
 ];
 
 formValidatorPopupAdd.resetValidation();
-function createCard() {        //функция создания карточки
+/* function createCard() {        //функция создания карточки
   const obj = {
     name: popupAddPlace.value,
     link: popupAddLink.value
@@ -82,7 +82,7 @@ function createCard() {        //функция создания карточк�
 };
 function addCard(card) {       //функция добавления новой карточки
   cardsContainer.prepend(card);
-};
+}; */
 
 
 
@@ -95,10 +95,8 @@ const cardsList = new Section({
   items: initialCards,
   renderer: (data) => {
     const card = new Card(data, '#element-template', () => {
-     
-        popupWithImage.open('.popup-photo', data);
-      
-    });    
+      popupWithImage.open();
+    });
     const cardElement = card.generateCard();
     return cardElement;
   },
@@ -108,7 +106,31 @@ const cardsList = new Section({
 cardsList.renderItems();
 
 
-const popupAddClass = new Popup(popupAdd);
+const popupProfileClass = new Popup(profilePopup);
+popupProfileClass.setEventListeners();
+
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  jobSelector: '.profile__job'
+});
+
+profileEditButton.addEventListener('click', () => {
+  popupProfileClass.open();
+  const getElements = userInfo.getUserInfo();
+  document.querySelector('.profile-popup__user_info_name').value = getElements.name;
+  document.querySelector('.profile-popup__user_info_job').value = getElements.job;
+});
+
+const popupWithProfileForm = new PopupWithForm({
+  popupSelector: profilePopup,
+  handleFormSubmit: (data) => {
+    userInfo.setUserInfo(data.name, data.job);
+    popupWithProfileForm.close();
+  }
+});
+popupWithProfileForm.generate();
+
+const popupAddClass = new Popup(popupAddSelector);
 popupAddClass.setEventListeners();
 
 buttonAdd.addEventListener('click', () => {
@@ -116,29 +138,15 @@ buttonAdd.addEventListener('click', () => {
   formValidatorPopupAdd.resetValidation();
 });
 
-const popupProfileClass = new Popup(profilePopup);
-popupProfileClass.setEventListeners();
-
-profileEditButton.addEventListener('click', () => {
-  popupProfileClass.open();
-  profilePopupName.value = profileName.textContent;
-  profilePopupJob.value = profileJob.textContent;
+const popupWithAddForm = new PopupWithForm({
+  popupSelector: popupAddSelector,
+  handleFormSubmit: (data) => {
+    const card = new Card(data, '#element-template', () => {
+      popupWithImage.open();
+    });
+    card.generateCard();
+    cardsList.addItem();
+    popupWithAddForm.close();
+  }
 });
-
-const PopupWithProfileForm = new PopupWithForm('.profile-popup', (evt) => {
-  evt.preventDefault();
-  profileName.textContent = profilePopupName.value;
-  profileJob.textContent = profilePopupJob.value;
-  PopupWithProfileForm.close();
-});
-PopupWithProfileForm.generate();
-
-const PopupWithAddForm = new PopupWithForm('.popup-add', (event) => {
-  event.preventDefault();
-  addCard(createCard());
-  event.target.reset();
-  PopupWithAddForm.close();
-});
-PopupWithAddForm.generate();
-
-UserInfo.getUserInfo();
+popupWithAddForm.generate();
