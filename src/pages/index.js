@@ -57,11 +57,11 @@ const initialCards = [
   }
 ];
 const popupWithImage = new PopupWithImage(popupPhoto);
+popupWithImage.setEventListeners();
 
 function createCard(data) {
   const card = new Card(data, '#element-template', (name, link) => {
     popupWithImage.open(name, link);
-    popupWithImage.setEventListeners();
   });
   return card.generateCard();
 }
@@ -83,7 +83,6 @@ const userInfo = new UserInfo({
 
 profileEditButton.addEventListener('click', () => {
   popupWithProfileForm.open();
-  popupWithProfileForm.setEventListeners();
   const getElements = userInfo.getUserInfo();
   profilePopupName.value = getElements.name;
   profilePopupJob.value = getElements.job;
@@ -96,11 +95,10 @@ const popupWithProfileForm = new PopupWithForm({
     popupWithProfileForm.close();
   }
 });
-popupWithProfileForm.getForm();
+popupWithProfileForm.setEventListeners();
 
 buttonAdd.addEventListener('click', () => {
   popupWithAddForm.open();
-  popupWithAddForm.setEventListeners();
   formValidatorPopupAdd.resetValidation();
 });
 
@@ -112,4 +110,4 @@ const popupWithAddForm = new PopupWithForm({
     popupWithAddForm.close();
   }
 });
-popupWithAddForm.getForm();
+popupWithAddForm.setEventListeners();

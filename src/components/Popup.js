@@ -13,18 +13,17 @@ export default class Popup {
     }
     _handleEscClose(event) {
         if (event.key === 'Escape') {
-            const popupSome = document.querySelector('.popup_opened')
-            this.close(popupSome);
+            this.close();
         }
     }
     _closePopupOverlay(event) {
         if (event.target.classList.contains('popup')) {
-            this.close(event.target);
+            this.close();
         }
     };
     setEventListeners() {
         const closeButton = this._popup.querySelector('.popup__close-button');
-        closeButton.addEventListener('click', (popup) => this.close(popup));
+        closeButton.addEventListener('click', () => this.close());
         this._popup.addEventListener('mousedown', (event) => this._closePopupOverlay(event));
     }
 }
