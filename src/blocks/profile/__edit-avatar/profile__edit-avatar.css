@@ -4,4 +4,10 @@
     position: absolute;
     right: 45px;
     top: 45px;
+    background-image: url(../../../images/edit-avatar.svg);
+    border: none;
+    opacity: 0;
+}
+.profile__edit-avatar:hover{
+    opacity: 1;
 }

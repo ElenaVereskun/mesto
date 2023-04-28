@@ -8,25 +8,14 @@ export default class Api {
         return fetch(`${this.url}/users/me`, {
             headers: this.headers
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
+            .then(res => this._errorCheck(res))
     }
-
     //2. Загрузка карточек с сервера
     getCards() {
         return fetch(`${this.url}/cards`, {
             headers: this.headers
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
+            .then(res => this._errorCheck(res))
     }
     //3. Редактирование профиля
     editUserInfo(data) {
@@ -41,14 +30,8 @@ export default class Api {
                 about: data.job
             })
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
+            .then(res => this._errorCheck(res))
     }
-
     //4. Добавление новой карточки
     createCard(data) {
         return fetch(`${this.url}/cards`, {
@@ -61,67 +44,56 @@ export default class Api {
                 name: data.name,
                 link: data.link
             })
-        }).then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
-
+        }).then(res => this._errorCheck(res))
     }
     //7. Удаление карточки
-    deleteCard(data) {
-        return fetch(`${this.url}/cards/${_id}`, {
+    deleteCard(cardId) {
+        return fetch(`${this.url}/cards/${cardId}`, {
             method: 'DELETE',
             headers: {
                 authorization: '8f35f71b-a7e4-4bcd-adfc-0c93657d6d95',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                _id: data._id
-            })
-        }).then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        }).then(res => this._errorCheck(res))
     };
 
     //8. Постановка и снятие лайка
-    likeCard(data){
-        return fetch(`${this.url}/cards/${_id}/likes`, {
+    likeCard(cardId) {
+        return fetch(`${this.url}/cards/${cardId}/likes`, {
             method: 'PUT',
             headers: {
                 authorization: '8f35f71b-a7e4-4bcd-adfc-0c93657d6d95',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                _id: data._id
-            })
-        }).then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        }).then(res => this._errorCheck(res))
     };
-
-    deleteLikeCard(data){
-        return fetch(`${this.url}/cards/${_id}/likes`, {
+    deleteLikeCard(cardId) {
+        return fetch(`${this.url}/cards/${cardId}/likes`, {
             method: 'DELETE',
             headers: {
                 authorization: '8f35f71b-a7e4-4bcd-adfc-0c93657d6d95',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                _id: data._id
-            })
-        }).then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        }).then(res => this._errorCheck(res))
     };
+    //9. Обновление аватара пользователя
+    editAvatar(data) {
+        return fetch(`${this.url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: {
+                authorization: '8f35f71b-a7e4-4bcd-adfc-0c93657d6d95',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                avatar: data.link
+            })
+        }).then(res => this._errorCheck(res))
+    }
+    _errorCheck(res) {
+        if (res.ok) {
+            return res.json();
+        } else {
+            return Promise.reject(`Ошибка: ${res.status}`);
+        }
+    }
 }

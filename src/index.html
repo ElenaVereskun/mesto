@@ -16,8 +16,7 @@
             <div class="profile__info">
                 <div class="profile__photo">
                     <img src=" " class="profile__avatar" alt="аватар">
-                    <img src="<%=require('./images/edit-avatar.svg')%>" class="profile__edit-avatar"
-                        alt="изменить аватар">
+                    <button class="profile__edit-avatar" alt-label="изменить аватар" type="button"></button>
                 </div>
                 <div class="profile__user-name">
                     <div class="profile__user-edit">
@@ -94,14 +93,11 @@
         </div>
     </div>
     <div class="popup popup-confirm">
-        <form class="popup-confirm__form popup__form" name="поп-ап"></form>
+        <form class="popup-confirm__form popup__form" name="поп-ап">
             <div class="popup-confirm__container">
-
                 <h2 class="popup-confirm__title">Вы уверены?</h2>
-
                 <button class="popup-confirm popup-confirm__save-button" type="submit">Да</button>
                 <button class="popup__close-button popup-confirm__close-button" type="button" aria-label="Закрыть"></button>
-
             </div>
         </form>
     </div>
@@ -109,9 +105,10 @@
         <div class="popup-avatar__container">
             <h2 class="popup-avatar__title">Обновить аватар</h2>
             <form class="popup-avatar__form popup__form" name="поп-ап" novalidate>
-                <input class="popup__input popup-avatar__link" type="url" id="input-link" name="link"
+                <input src=" " class="popup__input popup-avatar__link" type="url" id="input-link-avatar" name="link"
                     placeholder="Ссылка на аватар" required>
-                <button class="popup-avatar popup-avatar__save-button" type="submit">Сохранить</button>
+                <span class="popup__error input-link-avatar-error" id="input-link-avatar-error"></span>
+                <button class="popup-avatar__save-button popup__save-button" type="submit">Сохранить</button>
                 <button class="popup__close-button popup-avatar__close-button" type="button"
                     aria-label="Закрыть"></button>
             </form>
