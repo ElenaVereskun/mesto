@@ -97,22 +97,23 @@ api.getCards()
     cardsList.renderItems();
   });
 
-const handleLikeClick = (cardId, likes) => {
-  if (!likes) {
-    api.likeCard(cardId)
+const handleLikeClick = (likes, id, cardData) => {
+  if (likes) {
+    api.likeCard(id)
       .then((res) => {
-        console.log(res.likes)
-        /* newCard.handleLikeClick(res.likes); */
-      })
-  } else {
-    api.deleteLikeCard(cardId)
-      .then((res) => {
-        console.log(res.likes)
-        /* newCard.handleLikeClick(res.likes); */
+        console.log(res.likes);
+        cardData.addLike(res.likes);
       })
   }
 }
-
+const handleDeleteLikeClick = (likes, id, cardData) => {
+  if (!likes)
+    api.deleteLikeCard(id, cardData)
+      .then((res) => {
+        console.log(res.likes)
+        cardData.disLike(res.likes);
+      })
+}
 const popupWithConfirmation = new PopupWithConfirmation(
   popupConfirmation,
   (cardId) => {
@@ -130,7 +131,8 @@ function createCard(cardData) {
     '#element-template',
     (name, link) => popupWithImage.open(name, link),
     (cardData) => popupWithConfirmation.open(cardData),//здесь cardData undefined
-    (likes, id) => handleLikeClick(likes, id)
+    (likes, id) => handleLikeClick(likes, id),
+    (likes, id, cardData) => handleDeleteLikeClick(likes, id, cardData),
   );
   return card.generateCard(cardData);
 }
@@ -179,15 +181,10 @@ const popupWithAddForm = new PopupWithForm({
   handleFormSubmit: (data) => {
     api.createCard(data)
       .then((res) => {
-        const cardsList = new Section({
-          items: res,
-          renderer: () => { },
-        },
-          '.elements'
-        );
         const newCard = createCard(res);
-        console.log(res);//конкретная карточка!
-        cardsList.addItem(newCard);
+        console.log(res);
+        console.log(newCard);
+        document.querySelector('.elements').prepend(newCard);
       })
       .catch((error) => {
         console.error(`ошибка: ${error}`)

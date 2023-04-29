@@ -5,10 +5,10 @@ export default class PopupWithConfirmation extends Popup {
         this._elementForm = this._getElement();
         this._removeCard = removeCard
     }
-    open(cardId) {
-        console.log(cardId);//undefined какой-то объект пустой
+    open(cardData) {
+        console.log(cardData);//undefined какой-то объект пустой
         super.open();
-        this._data = cardId;
+        this._data = cardData;
     }
     _getElement() {
         const formPopup = this._popup
@@ -19,8 +19,8 @@ export default class PopupWithConfirmation extends Popup {
         super.setEventListeners();
         this._elementForm.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            console.log(cardData);//undefined
-            this._removeCard(cardData);
+            console.log(this._data);//undefined
+            this._removeCard(this._data);
         });
     }
 }
