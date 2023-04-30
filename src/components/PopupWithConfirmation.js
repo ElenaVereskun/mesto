@@ -6,7 +6,6 @@ export default class PopupWithConfirmation extends Popup {
         this._removeCard = removeCard
     }
     open(cardData) {
-        console.log(cardData);//undefined какой-то объект пустой
         super.open();
         this._data = cardData;
     }
@@ -15,11 +14,10 @@ export default class PopupWithConfirmation extends Popup {
             .querySelector('.popup__form');
         return formPopup;
     }
-    setEventListeners(cardData) {
+    setEventListeners() {
         super.setEventListeners();
         this._elementForm.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            console.log(this._data);//undefined
             this._removeCard(this._data);
         });
     }

@@ -88,40 +88,36 @@ api.getCards()
   .then((res) => {
     const cardsList = new Section({
       items: res,
-      renderer: (data) => {
-        return createCard(data);
+      renderer: (cardData) => {        
+      return createCard(cardData);
       },
     },
       '.elements'
-    );
+    );   
     cardsList.renderItems();
   });
-
+//8. Постановка и снятие лайка
 const handleLikeClick = (likes, id, cardData) => {
-  if (likes) {
-    api.likeCard(id)
-      .then((res) => {
-        console.log(res.likes);
-        cardData.addLike(res.likes);
-      })
-  }
+  api.likeCard(id)
+    .then((res) => {
+      cardData.countLikes(res.likes);
+    })
 }
 const handleDeleteLikeClick = (likes, id, cardData) => {
-  if (!likes)
-    api.deleteLikeCard(id, cardData)
-      .then((res) => {
-        console.log(res.likes)
-        cardData.disLike(res.likes);
-      })
+  api.deleteLikeCard(id)
+    .then((res) => {
+      cardData.countLikes(res.likes);
+    })
 }
 const popupWithConfirmation = new PopupWithConfirmation(
   popupConfirmation,
-  (cardId) => {
-    console.log(cardId);
-    api.deleteCard(cardId)//здесь нужно передавать id
-      .then((res) => {
-        console.log(res)
+  (cardData) => {
+    api.deleteCard(cardData._id)
+      .then(() => {
+       cardData.cardElementRemove();
       })
+      .catch(err => console.log(err));     
+     popupWithConfirmation.close();
   });
 popupWithConfirmation.setEventListeners();
 
@@ -131,16 +127,14 @@ function createCard(cardData) {
     '#element-template',
     (name, link) => popupWithImage.open(name, link),
     (cardData) => popupWithConfirmation.open(cardData),//здесь cardData undefined
-    (likes, id) => handleLikeClick(likes, id),
+    (likes, id, cardData) => handleLikeClick(likes, id, cardData),
     (likes, id, cardData) => handleDeleteLikeClick(likes, id, cardData),
   );
   return card.generateCard(cardData);
 }
-
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
   jobSelector: '.profile__job'
-
 });
 
 profileEditButton.addEventListener('click', () => {
@@ -182,8 +176,6 @@ const popupWithAddForm = new PopupWithForm({
     api.createCard(data)
       .then((res) => {
         const newCard = createCard(res);
-        console.log(res);
-        console.log(newCard);
         document.querySelector('.elements').prepend(newCard);
       })
       .catch((error) => {
