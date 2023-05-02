@@ -47,30 +47,19 @@ const cardsList = new Section({
   renderer: (item) => createCard(item)
 },
   '.elements');
-
 let userId;
-
-//загрузка данных в шапку профиля
-api.getUserProfileInfo()
-  .then((res) => {
-    console.log(res);
-    profileJob.textContent = res.about;
-    profileName.textContent = res.name;
-    profileAvatar.src = res.avatar;
-    const userId = res._id;
-    console.log(userId);
-  })
-  .then(() => {
-    api.getCards()  //2. Загрузка карточек с сервера
-      .then((cardsData, userId) => {
-        cardsData.forEach((cardData) => {
-          const newCard = createCard(cardData, userId);
-          cardsList.addItem(newCard);
-        })
+Promise.all([api.getUserProfileInfo(), api.getCards()])
+  .then(([res, cardsData]) => {
+    userId = res._id;
+    userInfo.setUserInfo(res.name, res.about);
+    userInfo.setUserInfoAvatar(res.avatar);  
+      cardsData.forEach((cardData) => {
+        const newCard = createCard(cardData, userId);
+        cardsList.addItem(newCard);
       })
-      .catch(err => console.log(err));    
-    cardsList.renderItems();  
-  });
+    cardsList.renderItems(cardsData, userId);    
+  })
+  .catch(err => console.log(err));
 
 //9. Обновление аватара пользователя
 buttonEditAvatar.addEventListener('click', () => {
@@ -79,6 +68,7 @@ buttonEditAvatar.addEventListener('click', () => {
 const popupEditAvatar = new PopupWithForm({
   popup: popupAvatar,
   handleFormSubmit: (data) => {
+    popupEditAvatar.loading(true, 'Сохранение...');
     api.editAvatar(data)
       .then((res) => {
         profileAvatar.src = userInfo.setUserInfoAvatar(res);//useInfo class
@@ -86,37 +76,40 @@ const popupEditAvatar = new PopupWithForm({
       })
       .catch(err => console.log(err))
       .finally(() => {
-        formValidatorPopupAvatar._disableButton("Сохранение...");
-      })
+        popupEditAvatar.loading(false)
+      });
   }
 });
 popupEditAvatar.setEventListeners();
 
 //8. Постановка и снятие лайка
-const handleLikeClick = (likes, id, cardData) => {
-  api.likeCard(id)
+const handleLikeClick = (likes, cardId, cardData) => {
+  api.likeCard(cardId)
     .then((res) => {
       cardData.countLikes(res.likes);
     })
     .catch(err => console.log(err));
 }
-const handleDeleteLikeClick = (likes, id, cardData) => {
-  api.deleteLikeCard(id)
+const handleDeleteLikeClick = (likes, cardId, cardData) => {
+  api.deleteLikeCard(cardId)
     .then((res) => {
-      console.log(res);
       cardData.countLikes(res.likes);
     })
     .catch(err => console.log(err));
 }
 const popupWithConfirmation = new PopupWithConfirmation(
   popupConfirmation,
-  (cardData) => {    
-     api.deleteCard(cardData._id)
-      .then((cardData) => {
-        cardData.cardElementRemove();
-        popupWithConfirmation.close();
+  (data, cardId) => {
+    popupWithConfirmation.loading(true, 'Удаление...')
+    api.deleteCard(cardId)
+      .then(() => {
+        data.remove();        
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => {
+        popupWithConfirmation.loading(false);
+        popupWithConfirmation.close();
+      });
   });
 popupWithConfirmation.setEventListeners();
 
@@ -125,11 +118,11 @@ function createCard(cardData, userId) {
     cardData,
     '#element-template',
     (name, link) => popupWithImage.open(name, link),
-    (cardData) => popupWithConfirmation.open(cardData),
-    (likes, id, cardData) => handleLikeClick(likes, id, cardData),
-    (likes, id, cardData) => handleDeleteLikeClick(likes, id, cardData),
+    (data, cardId) => popupWithConfirmation.open(data, cardId),
+    (likes, cardId, cardData) => handleLikeClick(likes, cardId, cardData),
+    (likes, cardId, cardData) => handleDeleteLikeClick(likes, cardId, cardData),
   );
-  return card.generateCard(cardData);
+  return card.generateCard(cardData, userId);
 }
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
@@ -147,6 +140,7 @@ profileEditButton.addEventListener('click', () => {
 const popupWithProfileForm = new PopupWithForm({
   popup: profilePopup,
   handleFormSubmit: (data) => {
+    popupWithProfileForm.loading(true, 'Сохранение...');
     api.editUserInfo(data)
       .then((res) => {
         userInfo.setUserInfo(data.name, data.job);
@@ -155,9 +149,9 @@ const popupWithProfileForm = new PopupWithForm({
       })
       .catch(err => console.log(err))
       .finally(() => {
-        formValidatorPopupProfile._disableButton("Сохранение...");
-      })
-    popupWithProfileForm.close();
+        popupWithProfileForm.loading(false);
+        popupWithProfileForm.close();
+      });
   }
 });
 popupWithProfileForm.setEventListeners();
@@ -166,11 +160,11 @@ buttonAdd.addEventListener('click', () => {
   popupWithAddForm.open();
   formValidatorPopupAdd.resetValidation();
 });
-
 //4. Добавление новой карточки
 const popupWithAddForm = new PopupWithForm({
   popup: popupAdd,
   handleFormSubmit: (data) => {
+    popupWithAddForm.loading(true, 'Сохранение...');
     api.createCard(data)
       .then((res) => {
         cardsList.addItem(createCard(res));
@@ -178,7 +172,7 @@ const popupWithAddForm = new PopupWithForm({
       })
       .catch(err => console.log(err))
       .finally(() => {
-        formValidatorPopupAdd._disableButton("Сохранение...");
+        popupWithAddForm.loading(false);
       })
   }
 });
