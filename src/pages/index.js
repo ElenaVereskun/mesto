@@ -52,12 +52,12 @@ Promise.all([api.getUserProfileInfo(), api.getCards()])
   .then(([res, cardsData]) => {
     userId = res._id;
     userInfo.setUserInfo(res.name, res.about);
-    userInfo.setUserInfoAvatar(res.avatar);  
-      cardsData.forEach((cardData) => {
-        const newCard = createCard(cardData, userId);
-        cardsList.addItem(newCard);
-      })
-    cardsList.renderItems(cardsData, userId);    
+    userInfo.setUserInfoAvatar(res.avatar);
+    cardsData.forEach((cardData) => {
+      const newCard = createCard(cardData, userId);
+      cardsList.addItem(newCard);
+    })
+    cardsList.renderItems(cardsData, userId);
   })
   .catch(err => console.log(err));
 
@@ -103,12 +103,12 @@ const popupWithConfirmation = new PopupWithConfirmation(
     popupWithConfirmation.loading(true, 'Удаление...')
     api.deleteCard(cardId)
       .then(() => {
-        data.remove();        
+        data.remove();
+        popupWithConfirmation.close();
       })
       .catch(err => console.log(err))
       .finally(() => {
-        popupWithConfirmation.loading(false);
-        popupWithConfirmation.close();
+        popupWithConfirmation.loading(false)        
       });
   });
 popupWithConfirmation.setEventListeners();
@@ -146,11 +146,11 @@ const popupWithProfileForm = new PopupWithForm({
         userInfo.setUserInfo(data.name, data.job);
         res.about = data.job;
         res.name = data.name;
+        popupWithProfileForm.close();
       })
       .catch(err => console.log(err))
       .finally(() => {
         popupWithProfileForm.loading(false);
-        popupWithProfileForm.close();
       });
   }
 });
