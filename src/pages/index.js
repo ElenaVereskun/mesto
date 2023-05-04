@@ -55,7 +55,7 @@ Promise.all([api.getUserProfileInfo(), api.getCards()])
     userInfo.setUserInfoAvatar(res.avatar);
     cardsData.forEach((cardData) => {
       const newCard = createCard(cardData, userId);
-      cardsList.addItem(newCard);
+      cardsList.addItemPrepend(newCard);
     })
     cardsList.renderItems(cardsData, userId);
   })
@@ -177,4 +177,3 @@ const popupWithAddForm = new PopupWithForm({
   }
 });
 popupWithAddForm.setEventListeners();
-
